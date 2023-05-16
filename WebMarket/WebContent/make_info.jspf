@@ -1,0 +1,7 @@
+<div>
+	<p>
+		server = <%=application.getServerInfo() %><br>
+		servlet = <%= application.getMajorVersion() %>.<%= application.getMinorVersion() %><br>
+		JSP = <%= JspFactory.getDefaultFactory().getEngineInfo().getSpecificationVersion() %><br>
+	</p>
+</div>

@@ -1,0 +1,44 @@
+<%@ page contentType="text/html; charset=utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>  <%-- JSTL사용을 위함 --%>
+<%@ page session="true" %>
+<%
+	String userName = request.getRemoteUser();  // 인증한 사용자 이름. 인증하지 않았으면 null값 반환
+	boolean loginState = false;
+	if(userName == null){
+		userName = "[로그인]";
+		loginState = false;
+	}
+	else{
+		loginState = true;
+	}
+%>
+<nav class="navbar navbar-expand  navbar-dark bg-dark">
+	<div class="container">
+		<div class="navbar-header">
+			<a class="navbar-brand" href="./welcome.jsp">Home</a>
+		</div>
+		<div>
+			<ul class="navbar-nav mr-auto">
+				<!-- 
+				페이지 하나에서 모두 해결함
+				<li class="nav-item"><a class="navbar-brand" href="./products.jsp">상품 목록</a></li>
+				<li class="nav-item"><a class="navbar-brand" href="./removeProducts.jsp">상품 삭제</a></li>
+				<li class="nav-item"><a class="navbar-brand" href="./updateProducts.jsp">상품 수정</a></li>
+				<li class="nav-item"><a class="navbar-brand" href="./products_get.jsp?pageStr=update_test">상품 수정(삭제 추가)</a></li>
+				<li class="nav-item"><a class="navbar-brand" href="./products_get.jsp?pageStr=update">상품 수정(수정)</a></li>
+				<c:if test="<%= loginState %>">
+					<li class="nav-item"><a class="navbar-brand" href="./code_text.jsp">코드 테스트</a></li>
+				</c:if>
+				<li class="nav-item"><a class="navbar-brand" href="./products_get.jsp?pageStr=list">상품 목록</a></li>
+				 -->
+				<li class="nav-item"><a class="navbar-brand" href="./products.jsp">상품 목록</a></li>
+				<li class="nav-item"><a class="navbar-brand" href="./products_get.jsp?pageStr=remove">상품 삭제</a></li>
+				<li class="nav-item"><a class="navbar-brand" href="./products_get.jsp?pageStr=update">상품 수정</a></li>
+				<li class="nav-item"><a class="navbar-brand" href="./cart.jsp">장바구니</a></li>
+				<li class="nav-item"><a class="navbar-brand" href="./addProduct.jsp">상품 등록</a></li>
+				<li class="nav-item"><a class="navbar-brand" href="./code_text.jsp">코드 테스트</a></li>
+				<li class="nav-item"><a class="navbar-brand" href="./user.jsp"><%= userName %></a></li>
+			</ul>
+		</div>
+	</div>
+</nav>
