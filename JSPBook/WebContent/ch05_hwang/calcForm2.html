@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>계산기 서블릿 II</title>
+</head>
+<body>
+	<h2>계산기 서블릿 II</h2>
+	<hr>
+	<!-- <form method="post"> -->
+		<input type="text" name="n1" size="10" id="n1" value=0> 
+		<select name="op" id="op">
+			<option>+</option>
+			<option>-</option>
+			<option>*</option>
+			<option>/</option>
+		</select>
+		<input type="text" name="n2" size="10" id="n2" value=0>
+		<input type="submit" value="실행" onclick="onClick();">
+	<!-- </form> -->
+	<h6 id="result"></h6>
+	<hr>
+</body>
+<script>
+	function onClick(){
+		var n1 = parseFloat(document.getElementById("n1").value);
+		var n2 = parseFloat(document.getElementById("n2").value);
+		var op = document.getElementById("op").value;
+		var resultObj = document.getElementById("result");
+		var resultNum = 0;
+		var resultStr = "";
+
+		switch(op){
+			case "+" : resultNum = n1 + n2; break;
+			case "-" : resultNum = n1 - n2; break;
+			case "*" : resultNum = n1 * n2; break;
+			case "/" : resultNum = n1 / n2; break;
+		}
+		
+		resultStr = n1 + " " + op + " " + n2 + " = " + String(resultNum) + "<br>";
+		
+		resultObj.innerHTML += resultStr;
+	}
+</script>
+</html>

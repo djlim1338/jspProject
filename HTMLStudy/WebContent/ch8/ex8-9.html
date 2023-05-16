@@ -1,0 +1,20 @@
+<html>
+<head>
+<meta charset = "utf-8">
+<script>
+function changeHead() {
+        var newtitle = document.form1.newhead.value;
+        var head1 = document.getElementById("head1");
+        head1.innerHTML = newtitle;
+}
+</script>
+</head>
+<body>
+<h1 id = "head1">동적 heading</h1>
+<p>텍스트상자에 쓴 문자열이 단추를 클릭하면 heading에 보여지도록 한다.</p>
+<form name = "form1">
+        <input type = "text" name = "newhead" size = "25">
+        <input type = "button" value = "헤드텍스트 바꾸기" onClick ="changeHead();">
+</form>
+</body>
+</html>

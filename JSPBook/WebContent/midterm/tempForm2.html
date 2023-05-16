@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>온도 단위 변환기 (자바 스크립트)</title>
+</head>
+<body>
+	<h2>온도 단위 변환기 (자바 스크립트)</h2>
+	<hr>
+	<!-- <form method="post"> -->
+		<input type="text" name="temperature" id="temperature" size="20" value=0> 도
+		<select name="unit" id="unit">
+			<option>Celsius</option>
+			<option>Fahrenheit</option>
+		</select>
+		<p>로 변환하세요.<br><br>
+		<input type="submit" value="실행" onclick="onClick();">
+	<!-- </form> -->
+	<h3 id="result"></h3>
+	<hr>
+</body>
+<script>
+	function onClick(){
+		var temp = parseFloat(document.getElementById("temperature").value);
+		var unit = document.getElementById("unit").value;
+		var resultObj = document.getElementById("result");
+		var resultStr = "";
+		
+		var result = 0;
+
+		switch(unit){
+			case "Celsius": result = 5.0/9.0*(temp-32.0);break;
+			case "Fahrenheit": result = 9.0/5.0*temp+32.0;break;
+		}
+		
+		resultStr = "계산 결과 = " + String(result) + unit + "<br>";
+		
+		resultObj.innerHTML += resultStr;
+	}
+</script>
+</html>
