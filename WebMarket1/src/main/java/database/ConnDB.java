@@ -1,6 +1,7 @@
 package database;
 
 import java.sql.*;
+import java.util.HashMap;
 import dto.Product;
 
 public class ConnDB {
@@ -42,6 +43,7 @@ public class ConnDB {
 		this.stmt = null;
 		this.rs = null;
 	}
+	
 	public boolean getErrorState() {return this.errorState;}
 	
 	public boolean myslqExecute(String sqlStr) {
@@ -92,7 +94,7 @@ public class ConnDB {
 		return myslqExecute(sqlStr);
 	}
 	
-	public String columnString(String column) {
+	public String columnString(String column) {  // 단어에 따옴표 추가.
 		return '"' + column + '"';
 	}
 	
@@ -109,13 +111,13 @@ public class ConnDB {
 				+ columnString(product.getCondition()) +","
 				+ columnString(product.getFilename())
 				+ ")";
-		return myslqExecute(addQueryStr);
+		return myslqExecuteUpdate(addQueryStr);
 	}
 	
 	public boolean deleteProductById(String productId) {
 		String deleteQueryStr = "DELETE FROM product WHERE productId="
 				+columnString(productId);
-		return myslqExecute(deleteQueryStr);
+		return myslqExecuteUpdate(deleteQueryStr);
 	}
 	
 	public boolean updateProductById(String productOldId, Product product) {
@@ -133,19 +135,36 @@ public class ConnDB {
 				+ " "
 				+"WHERE productId="
 				+columnString(productOldId);
-		return myslqExecute(updateQueryStr);
+		return myslqExecuteUpdate(updateQueryStr);
+	}
+	
+	public ResultSet selectProductAll() {
+		String selectQueryStr = "SELECT * FROM product";
+		return myslqExecuteQuery(selectQueryStr);
+	}
+	
+	public ResultSet selectProductById(String productId) {
+		String selectQueryStr = "SELECT * FROM product "
+				+ "WHERE productId=" + productId;
+		return myslqExecuteQuery(selectQueryStr);
 	}
 	
 	
 	public void close() {
 		try {
-			this.conn.close();
+			this.rs.close();
 		}
 		catch(Exception e) {
 			this.errorState = true;
 		}
 		try {
 			this.stmt.close();
+		}
+		catch(Exception e) {
+			this.errorState = true;
+		}
+		try {
+			this.conn.close();
 		}
 		catch(Exception e) {
 			this.errorState = true;

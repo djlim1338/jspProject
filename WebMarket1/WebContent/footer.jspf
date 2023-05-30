@@ -1,0 +1,27 @@
+
+<footer class="container">
+	<div class="">
+		<h6 id="clock">00:00:00</h6>
+	</div>
+	<p>&copy; WebMarket</p>
+</footer>
+
+<script type="text/javascript">
+	var clock = document.getElementById('clock');
+	function getTime(){
+		const time = new Date();
+		const hour = time.getHours();
+		const minutes = time.getMinutes();
+		const seconds = time.getSeconds();
+		const display_hour = (hour<10?'0'+hour:hour);
+		const display_minutes = (minutes<10?'0'+minutes:minutes);
+		const display_seconds = (seconds<10?'0'+seconds:seconds);
+		
+		clock.innerHTML = `${display_hour}:${display_minutes}:${display_seconds}`;
+	}
+	
+	function init(){
+		setInterval(getTime, 1000);
+	}
+	
+</script>
