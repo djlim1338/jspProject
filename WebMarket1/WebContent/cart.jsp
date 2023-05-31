@@ -1,8 +1,8 @@
 <%@ page contentType="text/html; charset=utf-8"%>
 <%@ page import="java.util.ArrayList"%>
 <%@ page import="java.util.HashMap" %>
-<%@ page import="dto.Product"%>
-<%@ page import="dao.ProductRepository"%>
+<%@ page import="database.ConnDB"%>
+<%@ page import="java.sql.*" %>
 <html>
 <head>
 <link rel="stylesheet" href="./resources/css/bootstrap.min.css" />
@@ -38,31 +38,32 @@
 				</tr>
 				<%				
 					int sum = 0;
-					//ArrayList<Product> cartList = (ArrayList<Product>) session.getAttribute("cartlist");
 					HashMap<String, Integer> cartList = (HashMap<String, Integer>) session.getAttribute("cartlistNumber");
-					ProductRepository dao = ProductRepository.getInstance();
+
+					ConnDB conndb = new ConnDB();
+					
 					if (cartList == null)
-						//cartList = new ArrayList<Product>();
 						cartList = new HashMap<String, Integer>();
 
-					//for (int i = 0; i < cartList.size(); i++) { // 상품리스트 하나씩 출력하기
-					for (String productId : cartList.keySet()){
-						//Product product = cartList.get(i);
-						Product product = dao.getProductById(productId);
-						int total = product.getUnitPrice() * cartList.get(productId);
-						sum = sum + total;
+					for (String productId : cartList.keySet()){// 상품리스트 하나씩 출력하기
+						ResultSet rs = conndb.selectProductById(productId);
+						if(rs.next()){
+							int total = rs.getInt("p_unitPrice") * cartList.get(productId);
+							sum = sum + total;
 				%>
 				<tr>
 					
-					<td><a href="./product.jsp?id=<%= product.getProductId()%>">
-					<%=product.getProductId()%> - <%=product.getPname()%></a></td>
-					<td><%=product.getUnitPrice()%></td>
+					<td><a href="./product.jsp?id=<%=rs.getString("p_id")%>">
+					<%=rs.getString("p_id")%> - <%=rs.getString("p_name")%></a></td>
+					<td><%=rs.getString("p_unitPrice")%></td>
 					<td><%=cartList.get(productId)%></td>
 					<td><%=total%></td>
-					<td><a href="./removeCart.jsp?id=<%=product.getProductId()%>" class="badge badge-danger">삭제</a></td>
+					<td><a href="./removeCart.jsp?id=<%=rs.getString("p_id")%>" class="badge badge-danger">삭제</a></td>
 				</tr>
 				<%
+						}
 					}
+					conndb.close();
 				%>
 				<tr>
 					<th></th>

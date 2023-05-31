@@ -1,7 +1,5 @@
 <%@ page contentType="text/html; charset=utf-8"%>
 <%@ page import="java.util.ArrayList"%>
-<%@ page import="dto.Product"%>
-<%@ page import="dao.ProductRepository"%>
 <%@ page import="database.ConnDB"%>
 <%@ page import="java.sql.*" %>
 
@@ -20,10 +18,6 @@
 		</div>
 	</div>
 	<%
-		//ArrayList<Product> listOfProducts = productDAO.getAllProducts();
-		//ProductRepository dao = ProductRepository.getInstance();
-		//ArrayList<Product> listOfProducts = dao.getAllProducts();
-		
 		ConnDB conndb = new ConnDB();
 		ResultSet rs = conndb.selectProductAll();
 	%>
