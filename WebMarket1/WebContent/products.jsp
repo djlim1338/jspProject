@@ -21,25 +21,29 @@
 	</div>
 	<%
 		//ArrayList<Product> listOfProducts = productDAO.getAllProducts();
-		ProductRepository dao = ProductRepository.getInstance();
-		ArrayList<Product> listOfProducts = dao.getAllProducts();
+		//ProductRepository dao = ProductRepository.getInstance();
+		//ArrayList<Product> listOfProducts = dao.getAllProducts();
 		
 		ConnDB conndb = new ConnDB();
-		conndb.selectProductAll();
-		conndb.close();
+		ResultSet rs = conndb.selectProductAll();
 	%>
 
 	<div class="container">
 		<div class="row" align="center">
-			<c:forEach var = "item" items = "<%=listOfProducts%>">
-				<div class="col-md-4">
-					<img src ="./resources/images/<c:out value="${item.getFilename()}"/>" style ="width: 100%">
-					<h3><c:out value="${item.getPname()}"/></h3>
-					<p><c:out value="${item.getDescription()}"/>
-					<p><c:out value="${item.getUnitPrice()}"/>원
-					<p><a href="./product.jsp?id=<c:out value="${item.getProductId()}"/>" class="btn btn-secondary" role="button"> 상세 정보 &raquo;</a>
-				</div>
-			</c:forEach>
+		<%
+			while(rs.next()){
+		%>
+			<div class="col-md-4">
+				<img src ="./resources/images/<%= rs.getString("p_fileName")%>" style ="width: 100%">
+				<h3><%= rs.getString("p_name")%></h3>
+				<p><%= rs.getString("p_description")%>
+				<p><%= rs.getString("p_unitPrice")%>원
+				<p><a href="./product.jsp?id=<%= rs.getString("p_id")%>" class="btn btn-secondary" role="button"> 상세 정보 &raquo;</a>
+			</div>
+		<%
+			}
+			conndb.close();
+		%>
 		</div>
 		<hr>
 	</div>

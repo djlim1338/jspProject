@@ -98,43 +98,43 @@ public class ConnDB {
 		return '"' + column + '"';
 	}
 	
-	public boolean addProduct(Product product) {
-		String addQueryStr = "INSERT INTO product( productId, pname, unitPrice, description, manufacturer, category, unitsInStock, conditional , filename)"
+	public boolean addProduct(String p_id, String p_name, long p_unitPrice, String p_description, String p_manufacturer, String p_category, long p_unitsInStock, String p_condition, String p_fileName) {
+		String addQueryStr = "INSERT INTO product(p_id, p_name, p_unitPrice, p_description, p_manufacturer, p_category, p_unitsInStock, p_condition, p_fileName)"
 				+ "VALUES("
-				+ columnString(product.getProductId()) +","
-				+ columnString(product.getPname()) +","
-				+ product.getUnitPrice() +","
-				+ columnString(product.getDescription()) +","
-				+ columnString(product.getManufacturer()) +","
-				+ columnString(product.getCategory()) +","
-				+ product.getUnitsInStock() +","
-				+ columnString(product.getCondition()) +","
-				+ columnString(product.getFilename())
+				+ columnString(p_id) +","
+				+ columnString(p_name) +","
+				+ p_unitPrice +","
+				+ columnString(p_description) +","
+				+ columnString(p_manufacturer) +","
+				+ columnString(p_category) +","
+				+ p_unitsInStock +","
+				+ columnString(p_condition) +","
+				+ columnString(p_fileName)
 				+ ")";
 		return myslqExecuteUpdate(addQueryStr);
 	}
 	
 	public boolean deleteProductById(String productId) {
-		String deleteQueryStr = "DELETE FROM product WHERE productId="
+		String deleteQueryStr = "DELETE FROM product WHERE p_id="
 				+columnString(productId);
 		return myslqExecuteUpdate(deleteQueryStr);
 	}
 	
-	public boolean updateProductById(String productOldId, Product product) {
+	public boolean updateProductById(String p_old_id, String p_id, String p_name, long p_unitPrice, String p_description, String p_manufacturer, String p_category, long p_unitsInStock, String p_condition, String p_fileName) {
 		String updateQueryStr = "UPDATE product "
 				+ "SET "
-				+ "productId = " + columnString(product.getProductId()) +","
-				+ "pname = " + columnString(product.getPname()) +","
-				+ "unitPrice = " + product.getUnitPrice() +","
-				+ "description = " + columnString(product.getDescription()) +","
-				+ "manufacturer = " + columnString(product.getManufacturer()) +","
-				+ "category = " + columnString(product.getCategory()) +","
-				+ "unitsInStock = " + product.getUnitsInStock() +","
-				+ "conditional = " + columnString(product.getCondition()) +","
-				+ "filename = " + columnString(product.getFilename())
+				+ "p_id = " + columnString(p_id) +","
+				+ "p_name = " + columnString(p_name) +","
+				+ "p_unitPrice = " + p_unitPrice +","
+				+ "p_description = " + columnString(p_description) +","
+				+ "p_manufacturer = " + columnString(p_manufacturer) +","
+				+ "p_category = " + columnString(p_category) +","
+				+ "p_unitsInStock = " + p_unitsInStock +","
+				+ "p_condition = " + columnString(p_condition) +","
+				+ "p_fileName = " + columnString(p_fileName)
 				+ " "
-				+"WHERE productId="
-				+columnString(productOldId);
+				+ "WHERE p_id="
+				+ columnString(p_old_id);
 		return myslqExecuteUpdate(updateQueryStr);
 	}
 	
@@ -145,7 +145,7 @@ public class ConnDB {
 	
 	public ResultSet selectProductById(String productId) {
 		String selectQueryStr = "SELECT * FROM product "
-				+ "WHERE productId=" + productId;
+				+ "WHERE p_id=" + columnString(productId);
 		return myslqExecuteQuery(selectQueryStr);
 	}
 	

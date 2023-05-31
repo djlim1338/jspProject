@@ -1,6 +1,8 @@
 <%@ page contentType="text/html; charset=utf-8"%>
 <%@ page import="dao.ProductRepository"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  <%-- JSTL사용을 위함 --%>
+<%@ page import="database.ConnDB"%>
+<%@ page import="java.sql.*" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,10 +13,14 @@
 	<%
 		String pruductId = request.getParameter("id");
 	
-		ProductRepository dao = ProductRepository.getInstance();
-		
+		//ProductRepository dao = ProductRepository.getInstance();
+
 		boolean sameState;
-		sameState = dao.getSameId(pruductId);
+		ConnDB conndb = new ConnDB();
+		ResultSet rs = conndb.selectProductById(pruductId);
+		if(rs.next())sameState = true;
+		else sameState = false;
+		conndb.close();
 	%>
 	<div class="container">
 		<c:choose>

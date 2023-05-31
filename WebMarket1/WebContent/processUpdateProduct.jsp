@@ -2,10 +2,9 @@
 <%@ page import="com.oreilly.servlet.*"%>
 <%@ page import="com.oreilly.servlet.multipart.*"%>
 <%@ page import="java.util.*" %>
-<%@ page import="dto.Product"%>
-<%@ page import="dao.ProductRepository"%>
 <%@ page import="java.io.File" %>  <%-- 파일 관리 --%>
 <%@ page import="database.ConnDB"%>
+<%@ page import="java.sql.*" %>
 
 <%
 	request.setCharacterEncoding("UTF-8");
@@ -30,9 +29,6 @@
 	String productIdOld = multi.getParameter("productId_old");  // 수정 전 상품 아이디.
 	String fileNameOld = multi.getParameter("productImage_old");  // 수정 전 이미지 파일 이름
 	
-	ProductRepository dao = ProductRepository.getInstance();
-	Product product = dao.getProductById(productIdOld);  // 수정 전 상품 객체
-	
 	
 	Integer price;
 
@@ -49,31 +45,39 @@
 		stock = Long.valueOf(unitsInStock);
 	
 	Enumeration files = multi.getFileNames();
+	
+	
+	
 	String fname = (String) files.nextElement();
 	String fileName = multi.getFilesystemName(fname);
-	String filePath = realFolder + "\\" + product.getFilename();  // 실제 파일 특정
-	File file = new File(filePath);
-	if(fileName == null) fileName = fileNameOld;
-	else{
-		if(file.exists()) file.delete();
-	}
-
-	product.setProductId(productId);
-	product.setPname(name);
-	product.setUnitPrice(price);
-	product.setDescription(description);
-	product.setManufacturer(manufacturer);
-	product.setCategory(category);
-	product.setUnitsInStock(stock);
-	product.setCondition(condition);
-	product.setFilename(fileName);
 	
 	ConnDB conndb = new ConnDB();
-	conndb.updateProductById(productIdOld, product);
+	if(fileName == null) fileName = fileNameOld;
+	else{
+		ResultSet rs = conndb.selectProductById(productIdOld);
+		if(rs.next()){
+			String filePath = realFolder + "\\" + rs.getString("p_fileName");  // 실제 파일 특정
+			File file = new File(filePath);
+			if(file.exists()) file.delete();
+		}
+	}
+	//conndb.updateProductById(productIdOld, product);
+	conndb.updateProductById(
+			productIdOld,
+			productId, 
+			name, 
+			price, 
+			description, 
+			manufacturer, 
+			category, 
+			stock, 
+			condition, 
+			fileName);
 	conndb.close();
 
 	//response.sendRedirect("products.jsp");
 	//response.sendRedirect("products_get.jsp?pageStr=list");
-	response.sendRedirect("product.jsp?id="+productId);
+	//response.sendRedirect("product.jsp?id="+productId);
+	response.sendRedirect("products_get.jsp?pageStr=update");
 %>
 
