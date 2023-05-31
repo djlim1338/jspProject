@@ -1,19 +1,20 @@
 package dao;
 
 import java.util.ArrayList;
+
 import dto.Product;
 public class ProductRepository {
-	private ArrayList<Product> listOfProducts = new ArrayList<Product>();
+	private ArrayList<Product> listOfProducts = new ArrayList<>();
 	private static ProductRepository instance = new ProductRepository();
 
 	public static ProductRepository getInstance(){
 		return instance;
-	} 
+	}
 
 	public ProductRepository() {
 		resetRepsitory();
 	}
-	
+
 	public void resetRepsitory() {
 		Product phone = new Product("P1234", "iPhone 6s", 800000);
 		phone.setDescription("4.7-inch, 1334X750 Renina HD display, 8-megapixel iSight Camera");
@@ -48,12 +49,11 @@ public class ProductRepository {
 	public ArrayList<Product> getAllProducts() {
 		return listOfProducts;
 	}
-	
+
 	public Product getProductById(String productId) {
 		Product productById = null;
 
-		for (int i = 0; i < listOfProducts.size(); i++) {
-			Product product = listOfProducts.get(i);
+		for (Product product : listOfProducts) {
 			if (product != null && product.getProductId() != null && product.getProductId().equals(productId)) {
 				productById = product;
 				break;
@@ -61,21 +61,20 @@ public class ProductRepository {
 		}
 		return productById;
 	}
-	
+
 	public boolean getSameId(String productId) {
-		for (int i = 0; i < listOfProducts.size(); i++) {
-			Product product = listOfProducts.get(i);
+		for (Product product : listOfProducts) {
 			if (product != null && product.getProductId() != null && product.getProductId().equals(productId)) {
 				return true;
 			}
 		}
 		return false;
 	}
-	
+
 	public void addProduct(Product product) {
 		listOfProducts.add(product);
 	}
-	
+
 	public void removeProduct(Product product) {
 		listOfProducts.remove(product);
 	}

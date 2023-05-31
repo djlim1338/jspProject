@@ -1,19 +1,24 @@
 package database;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 import dto.Product;
 
 public class ConnDB {
 	private String drivarClass = "com.mysql.jdbc.Driver";  // 드라이버 로딩
 	private String url = "jdbc:mysql://localhost:3306/WebMarketDB";  // 데이터베이스 접속
-	private String user = "web";  // mysql사용자 
+	private String user = "web";  // mysql사용자
 	private String password = "1234";  // 비밀번호
 	private boolean errorState = false;  // 에러 상태
-	
+
 	public Connection conn = null;  // 연결 객체
 	public Statement stmt = null;  // Statement 객체
 	public ResultSet rs = null;  // 레코드 저장할 ResultSet 객체
-	
+
 	public ConnDB() {
 		try {
 			// 드라이버 로딩
@@ -36,14 +41,14 @@ public class ConnDB {
 			this.resetDB();
 		}
 	}
-	
+
 	public void resetDB() {
 		this.conn = null;
 		this.stmt = null;
 		this.rs = null;
 	}
 	public boolean getErrorState() {return this.errorState;}
-	
+
 	public boolean myslqExecute(String sqlStr) {
 		try {
 			this.stmt.execute(sqlStr);
@@ -54,9 +59,9 @@ public class ConnDB {
 		}
 		return false;
 	}
-	
-	// insert, update, delete ...  
-	public boolean myslqExecuteUpdate(String sqlStr) {  
+
+	// insert, update, delete ...
+	public boolean myslqExecuteUpdate(String sqlStr) {
 		try {
 			this.stmt.executeUpdate(sqlStr);
 			return true;
@@ -66,9 +71,9 @@ public class ConnDB {
 		}
 		return false;
 	}
-	
+
 	// select
-	public ResultSet myslqExecuteQuery(String sqlStr) {  
+	public ResultSet myslqExecuteQuery(String sqlStr) {
 		try {
 			this.rs = this.stmt.executeQuery(sqlStr);
 			return this.rs;
@@ -78,7 +83,7 @@ public class ConnDB {
 		}
 		return null;
 	}
-	
+
 	public boolean createTestTable() {
 		String sqlStr = "CREATE TABLE test_table("
 				+ "	test_num INT,"
@@ -86,16 +91,16 @@ public class ConnDB {
 				+ ")";
 		return myslqExecute(sqlStr);
 	}
-	
+
 	public boolean deleteTestTable() {
 		String sqlStr = "DROP TABLE test_table";
 		return myslqExecute(sqlStr);
 	}
-	
+
 	public String columnString(String column) {
 		return '"' + column + '"';
 	}
-	
+
 	public boolean addProduct(Product product) {
 		String addQueryStr = "INSERT INTO product( productId, pname, unitPrice, description, manufacturer, category, unitsInStock, conditional , filename)"
 				+ "VALUES("
@@ -111,13 +116,13 @@ public class ConnDB {
 				+ ")";
 		return myslqExecute(addQueryStr);
 	}
-	
+
 	public boolean deleteProductById(String productId) {
 		String deleteQueryStr = "DELETE FROM product WHERE productId="
 				+columnString(productId);
 		return myslqExecute(deleteQueryStr);
 	}
-	
+
 	public boolean updateProductById(String productOldId, Product product) {
 		String updateQueryStr = "UPDATE product "
 				+ "SET "
@@ -135,8 +140,8 @@ public class ConnDB {
 				+columnString(productOldId);
 		return myslqExecute(updateQueryStr);
 	}
-	
-	
+
+
 	public void close() {
 		try {
 			this.conn.close();
