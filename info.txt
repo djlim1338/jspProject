@@ -1,0 +1,30 @@
+---------------------------------------------------------------------------
+
+web market main page
+http://127.0.0.1:8080/WebMarket/welcome.jsp
+주문목록
+http://127.0.0.1:8080/WebMarket/orderConfirmation.jsp
+주문완료
+http://127.0.0.1:8080/WebMarket/thankCustomer.jsp
+
+---------------------------------------------------------------------------
+
+web market 2 main page (database base)
+http://127.0.0.1:8080/WebMarket2/welcome.jsp
+주문목록
+http://127.0.0.1:8080/WebMarket2/orderConfirmation.jsp
+주문완료
+http://127.0.0.1:8080/WebMarket2/thankCustomer.jsp
+
+JSPBOOK JDBC 연습
+http://127.0.0.1:8080/JSPBook/ch16/connection.jsp
+http://127.0.0.1:8080/JSPBook/ch16/insert01.jsp
+---------------------------------------------------------------------------
+
+web market1 main page
+http://127.0.0.1:8080/WebMarket1/welcome.jsp
+
+과제_css
+http://127.0.0.1:8080/HTMLStudy/ch4/ex4-09.html
+
+---------------------------------------------------------------------------
