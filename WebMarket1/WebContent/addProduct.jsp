@@ -13,7 +13,7 @@
 	</div>
 	<div class="container">
 		<div class="text-right"> 
-			<a href="logout.jsp" class="btn btn-sm btn-success pull-right">logout</a>
+			<a href="logout.jsp" class="btn btn-sm btn-danger pull-right">logout</a>
 		</div>
 		<form name="newProduct" id="newProductForm" action="./processAddProduct.jsp" class="form-horizontal" method="post" enctype ="multipart/form-data">
 			<div class="form-group row">

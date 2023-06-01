@@ -38,6 +38,7 @@
 				</tr>
 				<%				
 					int sum = 0;
+					//long sum = 0;
 					HashMap<String, Integer> cartList = (HashMap<String, Integer>) session.getAttribute("cartlistNumber");
 
 					ConnDB conndb = new ConnDB();
@@ -49,6 +50,7 @@
 						ResultSet rs = conndb.selectProductById(productId);
 						if(rs.next()){
 							int total = rs.getInt("p_unitPrice") * cartList.get(productId);
+							//long total = rs.getLong("p_unitPrice") * cartList.get(productId);
 							sum = sum + total;
 				%>
 				<tr>

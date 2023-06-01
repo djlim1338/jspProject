@@ -24,7 +24,7 @@
 			String[] roles = request.getParameterValues("role");
 		%>
 		<hr>
-		<a href="logout.jsp" class="btn btn-sm btn-success pull-right">reset session</a>
+		<a href="logout.jsp" class="btn btn-sm btn-danger pull-right">reset session</a>
 		<p> SESSION ID = <%= session.getId() %>
 		<p> SESSION 생성시간 = <%= session.getCreationTime() %>
 		<p> SESSION 마지막 요청시간 = <%= session.getLastAccessedTime() %>

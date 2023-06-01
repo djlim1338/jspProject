@@ -15,9 +15,9 @@
 		<role-name>admin</role-name>
 	</security-role>
 	<security-constraint>
-		<display-name>WebMarket Security</display-name>
+		<display-name>WebMarket1 Security</display-name>
 		<web-resource-collection>
-			<web-resource-name>WebMarket</web-resource-name>
+			<web-resource-name>WebMarket1</web-resource-name>
 			<description></description>
 			<url-pattern>/user.jsp</url-pattern>
 			<url-pattern>/addProduct.jsp</url-pattern>

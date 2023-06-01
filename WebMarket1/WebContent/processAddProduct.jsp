@@ -45,8 +45,8 @@
 	if(fileName == null) fileName = "P_none.png";
 	
 	ConnDB conndb = new ConnDB();
-	/*
-	conndb.addProduct(
+	
+	/* conndb.addProduct(
 			p_id=productId, 
 			p_name=name, 
 			p_unitPrice=price, 
@@ -55,8 +55,8 @@
 			p_category=category, 
 			p_unitsInStock=stock, 
 			p_condition=condition, 
-			p_fileName=fileName);
-	*/
+			p_fileName=fileName); */
+	
 	conndb.addProduct(
 			productId, 
 			name, 
@@ -67,6 +67,7 @@
 			stock, 
 			condition, 
 			fileName);
+	
 	conndb.close();
 
 	response.sendRedirect("products.jsp");
