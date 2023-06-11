@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=utf-8"%>
+<%@ page import="database.ConnDB"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
 
@@ -18,9 +19,16 @@
 	String mail = mail1 + "@" + mail2;
 	String phone = request.getParameter("phone");
 	String address = request.getParameter("address");
+	
+	ConnDB conndb = new ConnDB();
+	boolean resultSet = conndb.updateMemberById(password, name, gender, birth, mail, phone, address, id);
+	conndb.close();
+	
+	if(resultSet) response.sendRedirect("resultMember.jsp?msg=0");
+	else out.print("쿼리 실패");
 %>
 
-<sql:setDataSource var="dataSource"
+<%-- <sql:setDataSource var="dataSource"
 	url="jdbc:mysql://localhost:3306/WebMarketDB"
 	driver="com.mysql.jdbc.Driver" user="web" password="1234" />
 
@@ -45,4 +53,4 @@
 <%= gender %>
 <%= birth %>
 <%= phone %>
-<%= address %>
+<%= address %> --%>

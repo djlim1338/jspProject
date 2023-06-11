@@ -46,17 +46,6 @@
 	
 	ConnDB conndb = new ConnDB();
 	
-	/* conndb.addProduct(
-			p_id=productId, 
-			p_name=name, 
-			p_unitPrice=price, 
-			p_description=description, 
-			p_manufacturer=manufacturer, 
-			p_category=category, 
-			p_unitsInStock=stock, 
-			p_condition=condition, 
-			p_fileName=fileName); */
-	
 	conndb.addProduct(
 			productId, 
 			name, 

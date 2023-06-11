@@ -39,12 +39,16 @@ public class ConnDB {
 	}
 	
 	public void resetDB() {
+		this.close();
 		this.conn = null;
 		this.stmt = null;
 		this.rs = null;
 	}
 	
 	public boolean getErrorState() {return this.errorState;}
+	
+	//-----------------------------------------------------------------------------------------------------------------------------
+	// sql query
 	
 	public boolean myslqExecute(String sqlStr) {
 		try {
@@ -81,6 +85,9 @@ public class ConnDB {
 		return null;
 	}
 	
+	//-----------------------------------------------------------------------------------------------------------------------------
+	// test
+	
 	public boolean createTestTable() {
 		String sqlStr = "CREATE TABLE test_table("
 				+ "	test_num INT,"
@@ -94,9 +101,15 @@ public class ConnDB {
 		return myslqExecute(sqlStr);
 	}
 	
+	//-----------------------------------------------------------------------------------------------------------------------------
+	// 문자열 따옴표 추가
+	
 	public String columnString(String column) {  // 단어에 따옴표 추가.
 		return '"' + column + '"';
 	}
+	
+	//-----------------------------------------------------------------------------------------------------------------------------
+	// product
 	
 	public boolean addProduct(String p_id, String p_name, long p_unitPrice, String p_description, String p_manufacturer, String p_category, long p_unitsInStock, String p_condition, String p_fileName) {
 		String QueryStr = "INSERT INTO product(p_id, p_name, p_unitPrice, p_description, p_manufacturer, p_category, p_unitsInStock, p_condition, p_fileName)"
@@ -121,19 +134,18 @@ public class ConnDB {
 	}
 	
 	public boolean updateProductById(String p_old_id, String p_id, String p_name, long p_unitPrice, String p_description, String p_manufacturer, String p_category, long p_unitsInStock, String p_condition, String p_fileName) {
-		String QueryStr = "UPDATE product "
-				+ "SET "
-				+ "p_id = " + columnString(p_id) +","
-				+ "p_name = " + columnString(p_name) +","
-				+ "p_unitPrice = " + p_unitPrice +","
-				+ "p_description = " + columnString(p_description) +","
-				+ "p_manufacturer = " + columnString(p_manufacturer) +","
-				+ "p_category = " + columnString(p_category) +","
-				+ "p_unitsInStock = " + p_unitsInStock +","
-				+ "p_condition = " + columnString(p_condition) +","
-				+ "p_fileName = " + columnString(p_fileName)
-				+ " "
-				+ "WHERE p_id="
+		String QueryStr = "UPDATE product"
+				+ " SET"
+				+ " p_id = " + columnString(p_id) +","
+				+ " p_name = " + columnString(p_name) +","
+				+ " p_unitPrice = " + p_unitPrice +","
+				+ " p_description = " + columnString(p_description) +","
+				+ " p_manufacturer = " + columnString(p_manufacturer) +","
+				+ " p_category = " + columnString(p_category) +","
+				+ " p_unitsInStock = " + p_unitsInStock +","
+				+ " p_condition = " + columnString(p_condition) +","
+				+ " p_fileName = " + columnString(p_fileName)
+				+ " WHERE p_id="
 				+ columnString(p_old_id);
 		return myslqExecuteUpdate(QueryStr);
 	}
@@ -148,6 +160,9 @@ public class ConnDB {
 				+ "WHERE p_id=" + columnString(productId);
 		return myslqExecuteQuery(QueryStr);
 	}
+	
+	//-----------------------------------------------------------------------------------------------------------------------------
+	// cart
 	
 	public boolean addCart(String userId, String productId, int quantity) {
 		String QueryStr = "INSERT INTO cart(userId, P_id, quantity) "
@@ -174,8 +189,8 @@ public class ConnDB {
 	}
 	
 	public ResultSet selectCartById(String userId, String productId) {
-		String QueryStr = "SELECT * FROM cart "
-				+ "WHERE userId=" + columnString(userId) + " AND p_id=" + columnString(productId);
+		String QueryStr = "SELECT * FROM cart"
+				+ " WHERE userId=" + columnString(userId) + " AND p_id=" + columnString(productId);
 		return myslqExecuteQuery(QueryStr);
 	}
 
@@ -186,8 +201,45 @@ public class ConnDB {
 	}
 	
 	public boolean deleteCartById(String userId, String productId) {
-		String QueryStr = "DELETE FROM cart "
-				+ "WHERE userId=" + columnString(userId) + " AND p_id=" + columnString(productId);
+		String QueryStr = "DELETE FROM cart"
+				+ " WHERE userId=" + columnString(userId) + " AND p_id=" + columnString(productId);
+		return myslqExecuteUpdate(QueryStr);
+	}
+
+	//-----------------------------------------------------------------------------------------------------------------------------
+	// member
+	
+	public boolean addMember(String id, String password, String name, String gender, String birth, String mail, String phone, String address, String regist_day){
+		String QueryStr = "INSERT INTO member(id, password, name, gender, birth, mail, phone, address, regist_day)"
+				+ " VALUES("
+				+ columnString(id) + ","
+				+ columnString(password) + ","
+				+ columnString(name) + ","
+				+ columnString(gender) + ","
+				+ columnString(birth) + ","
+				+ columnString(mail) + ","
+				+ columnString(phone) + ","
+				+ columnString(address) + ","
+				+ columnString(regist_day) + ")";
+		return myslqExecuteUpdate(QueryStr);
+	}
+	
+	public boolean deleteMember(String id){
+		String QueryStr = "DELETE FROM member WHERE id=" + columnString(id);
+		return myslqExecuteUpdate(QueryStr);
+	}
+	
+	public boolean updateMemberById(String password, String name, String gender, String birth, String mail, String phone, String address, String userId) {
+		String QueryStr = "UPDATE member"
+				+ " SET"
+				+ " password = " + columnString(password) +","
+				+ " name = " + columnString(name) +","
+				+ " gender = " + columnString(gender) +","
+				+ " birth = " + columnString(birth) +","
+				+ " mail = " + columnString(mail) +","
+				+ " phone = " + columnString(phone) +","
+				+ " address = " + columnString(address)
+				+ " WHERE id=" + columnString(userId);
 		return myslqExecuteUpdate(QueryStr);
 	}
 
@@ -206,25 +258,39 @@ public class ConnDB {
 		return myslqExecuteQuery(QueryStr);
 	}
 	
-	public boolean addMember(String id, String password, String name, String gender, String birth, String mail, String phone, String address, String regist_day){
-		String QueryStr = "INSERT INTO member(id, password, name, gender, birth, mail, phone, address, regist_day) "
-				+ "VALUES("
-				+ columnString(id) + ","
-				+ columnString(password) + ","
-				+ columnString(name) + ","
-				+ columnString(gender) + ","
-				+ columnString(birth) + ","
-				+ columnString(mail) + ","
-				+ columnString(phone) + ","
-				+ columnString(address) + ","
-				+ columnString(regist_day) + ")";
+	//-----------------------------------------------------------------------------------------------------------------------------
+	// 게시판 관련
+	
+	public boolean insertBoard(int num, String id, String name, String subject, String content, String regist_day, int hit, String ip) {
+		String QueryStr = "INSERT INTO board(num, id, name, subject, content, regist_day, hit, ip)"
+			+ " VALUES("
+			+ num + ","
+			+ columnString(id) + ","
+			+ columnString(name) + ","
+			+ columnString(subject) + ","
+			+ columnString(content) + ","
+			+ columnString(regist_day) + ","
+			+ hit + ","
+			+ columnString(ip) + ")";
 		return myslqExecuteUpdate(QueryStr);
 	}
 	
-	public boolean deleteMember(String id){
-		String QueryStr = "DELETE FROM member WHERE id=" + columnString(id);
-		return myslqExecuteUpdate(QueryStr);
-	}
+	/*
+	 * String sql = "INSERT INTO board VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+		
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, board.getNum());
+			pstmt.setString(2, board.getId());
+			pstmt.setString(3, board.getName());
+			pstmt.setString(4, board.getSubject());
+			pstmt.setString(5, board.getContent());
+			pstmt.setString(6, board.getRegist_day());
+			pstmt.setInt(7, board.getHit());
+			pstmt.setString(8, board.getIp());
+	 */
+	
+	//-----------------------------------------------------------------------------------------------------------------------------
+	// close
 	
 	
 	public void close() {
