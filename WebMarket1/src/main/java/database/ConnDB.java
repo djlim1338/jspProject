@@ -99,7 +99,7 @@ public class ConnDB {
 	}
 	
 	public boolean addProduct(String p_id, String p_name, long p_unitPrice, String p_description, String p_manufacturer, String p_category, long p_unitsInStock, String p_condition, String p_fileName) {
-		String addQueryStr = "INSERT INTO product(p_id, p_name, p_unitPrice, p_description, p_manufacturer, p_category, p_unitsInStock, p_condition, p_fileName)"
+		String QueryStr = "INSERT INTO product(p_id, p_name, p_unitPrice, p_description, p_manufacturer, p_category, p_unitsInStock, p_condition, p_fileName)"
 				+ "VALUES("
 				+ columnString(p_id) +","
 				+ columnString(p_name) +","
@@ -111,17 +111,17 @@ public class ConnDB {
 				+ columnString(p_condition) +","
 				+ columnString(p_fileName)
 				+ ")";
-		return myslqExecuteUpdate(addQueryStr);
+		return myslqExecuteUpdate(QueryStr);
 	}
 	
 	public boolean deleteProductById(String productId) {
-		String deleteQueryStr = "DELETE FROM product WHERE p_id="
+		String QueryStr = "DELETE FROM product WHERE p_id="
 				+columnString(productId);
-		return myslqExecuteUpdate(deleteQueryStr);
+		return myslqExecuteUpdate(QueryStr);
 	}
 	
 	public boolean updateProductById(String p_old_id, String p_id, String p_name, long p_unitPrice, String p_description, String p_manufacturer, String p_category, long p_unitsInStock, String p_condition, String p_fileName) {
-		String updateQueryStr = "UPDATE product "
+		String QueryStr = "UPDATE product "
 				+ "SET "
 				+ "p_id = " + columnString(p_id) +","
 				+ "p_name = " + columnString(p_name) +","
@@ -135,18 +135,95 @@ public class ConnDB {
 				+ " "
 				+ "WHERE p_id="
 				+ columnString(p_old_id);
-		return myslqExecuteUpdate(updateQueryStr);
+		return myslqExecuteUpdate(QueryStr);
 	}
 	
 	public ResultSet selectProductAll() {
-		String selectQueryStr = "SELECT * FROM product";
-		return myslqExecuteQuery(selectQueryStr);
+		String QueryStr = "SELECT * FROM product";
+		return myslqExecuteQuery(QueryStr);
 	}
 	
 	public ResultSet selectProductById(String productId) {
-		String selectQueryStr = "SELECT * FROM product "
+		String QueryStr = "SELECT * FROM product "
 				+ "WHERE p_id=" + columnString(productId);
-		return myslqExecuteQuery(selectQueryStr);
+		return myslqExecuteQuery(QueryStr);
+	}
+	
+	public boolean addCart(String userId, String productId, int quantity) {
+		String QueryStr = "INSERT INTO cart(userId, P_id, quantity) "
+				+ "VALUES("
+				+ columnString(userId) + ","
+				+ columnString(productId) + ","
+				+ quantity + ")";
+		return myslqExecuteUpdate(QueryStr);
+	}
+	
+	public boolean setCartQuantity(String userId, String productId, int quantity) {
+		String QueryStr = "UPDATE cart"
+				+ " SET"
+				+ " quantity = " + quantity
+				+ " WHERE userId=" + columnString(userId) 
+				+ " AND P_id=" + columnString(productId);
+		return myslqExecuteUpdate(QueryStr);
+	}
+
+	
+	public ResultSet selectCartAll(String userId) {
+		String QueryStr = "SELECT * FROM cart WHERE userId=" + columnString(userId);
+		return myslqExecuteQuery(QueryStr);
+	}
+	
+	public ResultSet selectCartById(String userId, String productId) {
+		String QueryStr = "SELECT * FROM cart "
+				+ "WHERE userId=" + columnString(userId) + " AND p_id=" + columnString(productId);
+		return myslqExecuteQuery(QueryStr);
+	}
+
+	
+	public boolean deleteCartAll(String userId) {
+		String QueryStr = "DELETE FROM cart WHERE userId=" + columnString(userId);
+		return myslqExecuteUpdate(QueryStr);
+	}
+	
+	public boolean deleteCartById(String userId, String productId) {
+		String QueryStr = "DELETE FROM cart "
+				+ "WHERE userId=" + columnString(userId) + " AND p_id=" + columnString(productId);
+		return myslqExecuteUpdate(QueryStr);
+	}
+
+	
+	public ResultSet loginMember(String userId, String userPassword) {
+		String QueryStr = "SELECT * FROM member "
+				+ "WHERE id=" + columnString(userId)
+				+ "and password=" + columnString(userPassword);
+		return myslqExecuteQuery(QueryStr);
+	}
+
+	
+	public ResultSet selectMember(String userId) {
+		String QueryStr = "SELECT * FROM member"
+				+ " WHERE id=" + columnString(userId);
+		return myslqExecuteQuery(QueryStr);
+	}
+	
+	public boolean addMember(String id, String password, String name, String gender, String birth, String mail, String phone, String address, String regist_day){
+		String QueryStr = "INSERT INTO member(id, password, name, gender, birth, mail, phone, address, regist_day) "
+				+ "VALUES("
+				+ columnString(id) + ","
+				+ columnString(password) + ","
+				+ columnString(name) + ","
+				+ columnString(gender) + ","
+				+ columnString(birth) + ","
+				+ columnString(mail) + ","
+				+ columnString(phone) + ","
+				+ columnString(address) + ","
+				+ columnString(regist_day) + ")";
+		return myslqExecuteUpdate(QueryStr);
+	}
+	
+	public boolean deleteMember(String id){
+		String QueryStr = "DELETE FROM member WHERE id=" + columnString(id);
+		return myslqExecuteUpdate(QueryStr);
 	}
 	
 	

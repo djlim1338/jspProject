@@ -1,43 +1,46 @@
 <%@ page contentType="text/html; charset=utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>  <%-- JSTL사용을 위함 --%>
-<%@ page session="true" %>
+<%-- <%@ page session="true" %> --%>
 <%
-	String userName = request.getRemoteUser();  // 인증한 사용자 이름. 인증하지 않았으면 null값 반환
-	boolean loginState = false;
-	if(userName == null){
-		userName = "[로그인]";
-		loginState = false;
-	}
-	else{
-		loginState = true;
-	}
+	String adminName = request.getRemoteUser();  // 인증한 사용자 이름. 인증하지 않았으면 null값 반환. tomcat에 설정한 관리자.
+	String sessionId = (String) session.getAttribute("sessionId");  // 일반 사용자
+	boolean adminState = (adminName!=null);
 %>
 <nav class="navbar navbar-expand  navbar-dark bg-dark">
 	<div class="container">
 		<div class="navbar-header">
-			<a class="navbar-brand" href="./welcome.jsp">Home</a>
+			<a class="navbar-brand" href="/WebMarket1/welcome.jsp">Home</a>
 		</div>
 		<div>
 			<ul class="navbar-nav mr-auto">
-				<!-- 
-				페이지 하나에서 모두 해결함
-				<li class="nav-item"><a class="navbar-brand" href="./products.jsp">상품 목록</a></li>
-				<li class="nav-item"><a class="navbar-brand" href="./removeProducts.jsp">상품 삭제</a></li>
-				<li class="nav-item"><a class="navbar-brand" href="./updateProducts.jsp">상품 수정</a></li>
-				<li class="nav-item"><a class="navbar-brand" href="./products_get.jsp?pageStr=update_test">상품 수정(삭제 추가)</a></li>
-				<li class="nav-item"><a class="navbar-brand" href="./products_get.jsp?pageStr=update">상품 수정(수정)</a></li>
-				<c:if test="<%= loginState %>">
-					<li class="nav-item"><a class="navbar-brand" href="./code_text.jsp">코드 테스트</a></li>
-				</c:if>
-				<li class="nav-item"><a class="navbar-brand" href="./products_get.jsp?pageStr=list">상품 목록</a></li>
-				 -->
-				<li class="nav-item"><a class="nav-link" href="./products.jsp">상품 목록</a></li>
-				<li class="nav-item"><a class="nav-link" href="./products_get.jsp?pageStr=remove">상품 삭제</a></li>
-				<li class="nav-item"><a class="nav-link" href="./products_get.jsp?pageStr=update">상품 수정</a></li>
-				<li class="nav-item"><a class="nav-link" href="./cart.jsp">장바구니</a></li>
-				<li class="nav-item"><a class="nav-link" href="./addProduct.jsp">상품 등록</a></li>
-				<li class="nav-item"><a class="nav-link" href="./code_text.jsp">코드 테스트</a></li>
-				<li class="nav-item"><a class="nav-link" href="./user.jsp"><%= userName %></a></li>
+				<c:choose>
+					<c:when test="${empty sessionId}">
+						<li class="nav-item"><a class="nav-link" href="<c:url value="/member/loginMember.jsp"/>">로그인 </a></li>
+						<li class="nav-item"><a class="nav-link" href='<c:url value="/member/addMember.jsp"/>'>회원 가입</a>
+					</c:when>
+					<c:otherwise>
+						<li style="padding-top: 7px; color: white">[<%=sessionId%>님]</li>
+						<li class="nav-item"><a class="nav-link" href="<c:url value="/member/logoutMember.jsp"/>">로그아웃 </a></li>
+						<li class="nav-item"><a class="nav-link" href='<c:url value="/member/updateMember.jsp"/>'>회원 수정</a>
+					</c:otherwise>
+				</c:choose>
+				
+				<li class="nav-item"><a class="nav-link" href="/WebMarket1/products.jsp">상품 목록</a></li>
+				<li class="nav-item"><a class="nav-link" href="/WebMarket1/cart.jsp">장바구니</a></li>
+				<li class="nav-item"><a class="nav-link" href="/WebMarket1/code_test.jsp">코드 테스트</a></li>
+
+				<c:set var="adState" value="<%= adminState %>"/>
+				<c:choose>
+					<c:when test="${adState == false}">
+						<li class="nav-item"><a class="nav-link" href="/WebMarket1/user.jsp">관리자 로그인</a></li>
+					</c:when>
+					<c:otherwise>
+						<li class="nav-item"><a class="nav-link" href="/WebMarket1/user.jsp">관리자 정보</a></li>
+						<li class="nav-item"><a class="nav-link" href="/WebMarket1/addProduct.jsp">상품 등록</a></li>
+						<li class="nav-item"><a class="nav-link" href="/WebMarket1/products_get.jsp?pageStr=remove">상품 삭제</a></li>
+						<li class="nav-item"><a class="nav-link" href="/WebMarket1/products_get.jsp?pageStr=update">상품 수정</a></li>
+					</c:otherwise>
+				</c:choose>
 			</ul>
 		</div>
 	</div>

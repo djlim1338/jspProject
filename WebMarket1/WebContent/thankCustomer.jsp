@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=utf-8"%>
 <%@ page import="java.net.URLDecoder"%>
+<%@ page import="database.ConnDB"%>
 <html>
 <head>
 <link rel="stylesheet" href="./resources/css/bootstrap.min.css" />
@@ -63,7 +64,15 @@
 </html>
 <%
 	//session.invalidate();
-	session.setAttribute("cartlistNumber", null);  // cart list만 제거함
+
+	if(sessionId != "" && sessionId != null){
+		ConnDB conndb = new ConnDB();
+		conndb.deleteCartAll(sessionId);
+		conndb.close();
+	}
+	else{
+		session.setAttribute("cartlistNumber", null);  // cart list만 제거함
+	}
 
 	for (int i = 0; i < cookies.length; i++) {
 		Cookie thisCookie = cookies[i];

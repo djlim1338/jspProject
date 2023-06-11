@@ -1,5 +1,7 @@
 <%@ page contentType="text/html; charset=utf-8"%>
 <%@ page import="java.util.Date"%>
+<%@ page import="database.ConnDB"%>
+<%@ page import="java.sql.*" %>
 <%!String greeting = "웹 쇼핑몰에 오신 것을 환영합니다";
 String tagline = "Welcome to Web Market!";%>
 
@@ -12,10 +14,20 @@ String tagline = "Welcome to Web Market!";%>
 </div>	
 <div class="container">
 	<div class="text-center">
+		<%
+			ConnDB conndb = new ConnDB();
+			if(conndb.conn == null){
+				out.println("<div class='alert alert-danger'>");
+				out.println("데이터베이스가 연결되지 않았습니다. 확인해주세요.");
+				out.println("</div>");
+			}
+			conndb.close();
+		%>
 		<h3>
 			<%=tagline%>
 		</h3>
 		<%
+		
 			Date day = new Date();
 			String am_pm;
 			int hour = day.getHours();

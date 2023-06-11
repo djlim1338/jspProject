@@ -87,7 +87,22 @@
 			<%
 				ConnDB conndb = new ConnDB();
 				int sum = 0;
-				HashMap<String, Integer> cartList = (HashMap<String, Integer>) session.getAttribute("cartlistNumber");
+				
+				HashMap<String, Integer> cartList;
+				//long sum = 0;
+				if(sessionId != "" && sessionId != null){
+					cartList = new HashMap<String, Integer>();
+					ResultSet rs = conndb.selectCartAll(sessionId);
+					if(rs != null){
+						while(rs.next()){
+							cartList.put(rs.getString("P_id"), rs.getInt("quantity"));
+						}
+					}
+				}
+				else{
+					cartList = (HashMap<String, Integer>) session.getAttribute("cartlistNumber");
+				}
+				
 				if (cartList == null)
 					cartList = new LinkedHashMap<String, Integer>();
 				for (String productId : cartList.keySet()){

@@ -1,4 +1,6 @@
 <%@ page contentType="text/html; charset=utf-8"%>
+<%@ page import="database.ConnDB"%>
+<%@ page import="java.sql.*" %>
 
 <html>
 <head>
@@ -7,6 +9,21 @@
 </head>
 <body>
 	<%@ include file="menu.jspf" %>
+	<%
+		String name = "";
+		String addressName = "";
+		
+		String memberName = (String) session.getAttribute("sessionId");
+		if(memberName != "" && memberName != null){
+			ConnDB conndb = new ConnDB();
+			ResultSet rs = conndb.selectMember(memberName);
+			if(rs.next()){
+				name = rs.getString("name");
+				addressName = rs.getString("address");
+			}
+			conndb.close();
+		}
+	%>
 	<div class="jumbotron">
 		<div class="container">
 			<h1 class="display-3">배송 정보</h1>
@@ -18,13 +35,13 @@
 			<div class="form-group row">
 				<label class="col-sm-2">성명</label>
 				<div class="col-sm-3">
-					<input name="name" type="text" class="form-control" />
+					<input name="name" type="text" class="form-control" value="<%= name %>" />
 				</div>
 			</div>
 			<div class="form-group row">
 				<label class="col-sm-2">배송일</label>
 				<div class="col-sm-3">
-					<input name="shippingDate" type="text" class="form-control" />(yyyy/mm/dd)
+					<input name="shippingDate" type="text" class="form-control"  />(yyyy/mm/dd)
 				</div>
 			</div>
 			<div class="form-group row">
@@ -42,7 +59,7 @@
 			<div class="form-group row">
 				<label class="col-sm-2">주소</label>
 				<div class="col-sm-5">
-					<input name="addressName" type="text" class="form-control" />
+					<input name="addressName" type="text" class="form-control" value="<%= addressName %>" />
 				</div>
 			</div>
 			<div class="form-group row">

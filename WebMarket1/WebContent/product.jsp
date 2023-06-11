@@ -38,34 +38,16 @@
 				
 				<p><form name="addForm" action="./addCart.jsp?id=<%=rs.getString("p_id")%>" method="post">
 					수량<input type="number" name="product_quantity" id="product_quantity" value='1' maxlength="4" style="width:80px" required>개
-					<!-- <a href="./addCart.jsp?id=<%=rs.getString("p_id")%>" id="addCart" class="btn btn-info"> 상품 담기 &raquo;</a> -->
 					<a href="#" class="btn btn-info" onclick="addToCart()"> 상품 담기 &raquo;</a> 
 					<a href="./cart.jsp" class="btn btn-warning"> 장바구니 &raquo;</a>
 					<a href="./products.jsp" class="btn btn-secondary"> 상품 목록 &raquo;</a>
 				</form>
-				
-				<!-- 
-				<c:if test="<%= loginState %>">
-					<a href="./processRemoveProduct.jsp?id=<%=rs.getString("p_id")%>" class="btn btn-danger" role="button" > 삭제 &raquo;</a>
-				</c:if> 
-				-->
 			</div>
 		</div>
 		<hr>
 	</div>
 	<jsp:include page="footer.jspf"/>
 	<script type="text/javascript">
-		/*
-		document.getElementById('addCart').onclick = function(event){
-			if (confirm("상품을 장바구니에 추가하시겠습니까?")) {
-				alert("장바구니에 추가되었습니다.")
-				return true
-			} else {		
-				alert("취소하셨습니다.")
-				return false
-			}
-		}
-		*/
 		function addToCart() {
 			var productQuantity = document.getElementById('product_quantity');
 			

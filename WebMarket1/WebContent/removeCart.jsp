@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=utf-8"%>
 <%@ page import="java.util.ArrayList"%>
 <%@ page import="java.util.HashMap" %>
+<%@ page import="database.ConnDB"%>
 <%@ page import="dto.Product"%>
 <%@ page import="dao.ProductRepository"%>
 
@@ -11,8 +12,17 @@
 		return;
 	}
 
-	HashMap<String, Integer> cartList = (HashMap<String, Integer>) session.getAttribute("cartlistNumber");
-	cartList.remove(id);
+	String sessionId = (String) session.getAttribute("sessionId");
+	if(sessionId != "" && sessionId != null){
+		ConnDB conndb = new ConnDB();
+		conndb.deleteCartById(sessionId, id);
+		conndb.close();
+	}
+	else{
+		HashMap<String, Integer> cartList = (HashMap<String, Integer>) session.getAttribute("cartlistNumber");
+		cartList.remove(id);
+	}
+	
 
 
 	response.sendRedirect("cart.jsp");

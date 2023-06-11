@@ -29,8 +29,8 @@
 		<p> SESSION 생성시간 = <%= session.getCreationTime() %>
 		<p> SESSION 마지막 요청시간 = <%= session.getLastAccessedTime() %>
 		<p> SESSION 최대 허용시간 = <%= session.getMaxInactiveInterval() %>
-		<p> 사용자 이름 = <%= request.getRemoteUser() %>
-		<p> 사용자 권한 = <%= request.getRemoteUser() %>
+		<p> 사용자 이름 = <%= session.getAttribute("sessionId") %>
+		<p> 관리자 이름 = <%= request.getRemoteUser() %>
 		<p> 인증 방식 = <%= request.getAuthType() %>
 		<p> protocol = <%= request.getProtocol() %>
 		<p> real path = <%= request.getServletContext().getRealPath("./")%>
