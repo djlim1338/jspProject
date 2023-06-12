@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="./resources/css/bootstrap.min.css" />
 <%
 	String cartId = session.getId();
+	String sessionId = (String) session.getAttribute("sessionId");
 %>
 <title>장바구니</title>
 </head>

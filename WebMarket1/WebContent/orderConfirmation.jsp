@@ -12,6 +12,8 @@
 	String cartId = session.getId();  // 이거 아래에서 전혀 사용하지 않음.
 	// 뭐야 이거 왜있는거여
 	// 교수님도 이거 왜있는지 모르겠다고 하시는데
+	
+	String sessionId = (String) session.getAttribute("sessionId");
 
 	String shipping_cartId = "";
 	String shipping_name = "";

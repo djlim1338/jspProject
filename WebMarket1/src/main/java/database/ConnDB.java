@@ -2,7 +2,7 @@ package database;
 
 import java.sql.*;
 import java.util.HashMap;
-import dto.Product;
+//import dto.Product;
 
 public class ConnDB {
 	private String drivarClass = "com.mysql.jdbc.Driver";  // 드라이버 로딩

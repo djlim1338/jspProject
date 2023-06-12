@@ -3,10 +3,10 @@ package mvc.model;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 
-//import mvc.database.DBConnection;
-import database.ConnDB;
+import mvc.database.DBConnection;
 
 public class BoardDAO {
 
@@ -21,12 +21,15 @@ public class BoardDAO {
 			instance = new BoardDAO();
 		return instance;
 	}	
+	
+	public String cs(String column) {  // 단어에 따옴표 추가. columnString
+		return '"' + column + '"';
+	}
 
 	public int getListCount(String items, String text) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		ConnDB conndb = new ConnDB();
 
 		int x = 0;
 
@@ -38,10 +41,9 @@ public class BoardDAO {
 			sql = "SELECT  count(*) FROM board WHERE " + items + " LIKE '%" + text + "%'";
 		
 		try {
-			//conn = DBConnection.getConnection();
-			//pstmt = conn.prepareStatement(sql);
-			//rs = pstmt.executeQuery();
-			rs = conndb.myslqExecuteQuery(sql);
+			conn = DBConnection.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
 
 			if (rs.next()) 
 				x = rs.getInt(1);
@@ -55,8 +57,7 @@ public class BoardDAO {
 				if (pstmt != null) 
 					pstmt.close();				
 				if (conn != null) 
-					conn.close();		
-				conndb.close();
+					conn.close();												
 			} catch (Exception ex) {
 				throw new RuntimeException(ex.getMessage());
 			}		
@@ -67,8 +68,8 @@ public class BoardDAO {
 	public ArrayList<BoardDTO> getBoardList(int page, int limit, String items, String text) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
+		Statement stmt = null;
 		ResultSet rs = null;
-		ConnDB conndb = new ConnDB();
 
 		int total_record = getListCount(items, text );
 		int start = (page - 1) * limit;
@@ -84,11 +85,20 @@ public class BoardDAO {
 		ArrayList<BoardDTO> list = new ArrayList<BoardDTO>();
 
 		try {
-			//conn = DBConnection.getConnection();
+			conn = DBConnection.getConnection();
 			//pstmt = conn.prepareStatement(sql);
 			//rs = pstmt.executeQuery();
-			rs = conndb.myslqExecuteQuery(sql);
 
+			/*
+			 * 오류가 발생하여 변경 시도
+			 * getBoardList() 에러 : java.sql.SQLException: Operation not allowed for a result set of type ResultSet.TYPE_FORWARD_ONLY.
+			 * 참고 사이트
+			 * https://taeying.tistory.com/entry/Operation-not-allowed-for-a-result-set-of-type-ResultSetTYPEFORWARDONLY
+			 * 엥.. 이미 강의자료에 있었네.. 299page
+			 */
+			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE);
+			rs = stmt.executeQuery(sql);
+			
 			while (rs.absolute(index)) {
 				BoardDTO board = new BoardDTO();
 				board.setNum(rs.getInt("num"));
@@ -117,29 +127,26 @@ public class BoardDAO {
 					pstmt.close();				
 				if (conn != null) 
 					conn.close();
-				conndb.close();
 			} catch (Exception ex) {
 				throw new RuntimeException(ex.getMessage());
 			}			
 		}
-		return null;
-	}	
-	
+		//return null;
+		return list;
+	}
 	public String getLoginNameById(String id) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;	
-		ConnDB conndb = new ConnDB();
 
 		String name=null;
 		String sql = "SELECT * FROM member WHERE id = ?";
 
 		try {
-			//conn = DBConnection.getConnection();
-			//stmt = conn.prepareStatement(sql);
-			//pstmt.setString(1, id);
-			//rs = pstmt.executeQuery();
-			rs = conndb.myslqExecuteQuery(sql);
+			conn = DBConnection.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
 
 			if (rs.next()) 
 				name = rs.getString("name");	
@@ -155,7 +162,6 @@ public class BoardDAO {
 					pstmt.close();				
 				if (conn != null) 
 					conn.close();
-				conndb.close();
 			} catch (Exception ex) {
 				throw new RuntimeException(ex.getMessage());
 			}		
@@ -167,9 +173,7 @@ public class BoardDAO {
 	public void insertBoard(BoardDTO board)  {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		ConnDB conndb = new ConnDB();
 		try {
-			/*
 			conn = DBConnection.getConnection();		
 
 			String sql = "INSERT INTO board VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
@@ -185,16 +189,6 @@ public class BoardDAO {
 			pstmt.setString(8, board.getIp());
 
 			pstmt.executeUpdate();
-			*/
-			conndb.insertBoard(
-					board.getNum(), 
-					board.getId(), 
-					board.getName(), 
-					board.getSubject(), 
-					board.getContent(), 
-					board.getRegist_day(), 
-					board.getHit(), 
-					board.getIp());
 		} catch (Exception ex) {
 			System.out.println("insertBoard() 에러 : " + ex);
 		} finally {
@@ -258,7 +252,6 @@ public class BoardDAO {
 		String sql = "select * from board where num = ? ";
 
 		try {
-			// todo 아직 변경하지 않음
 			conn = DBConnection.getConnection();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, num);
@@ -356,5 +349,4 @@ public class BoardDAO {
 	}	
 }
 
-	
 

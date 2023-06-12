@@ -3,7 +3,8 @@
 <%-- <%@ page session="true" %> --%>
 <%
 	String adminName = request.getRemoteUser();  // 인증한 사용자 이름. 인증하지 않았으면 null값 반환. tomcat에 설정한 관리자.
-	String sessionId = (String) session.getAttribute("sessionId");  // 일반 사용자
+	String userId = (String) session.getAttribute("sessionId");  // 일반 사용자
+	boolean userState = (userId!=null);
 	boolean adminState = (adminName!=null);
 %>
 <nav class="navbar navbar-expand  navbar-dark bg-dark">
@@ -13,13 +14,14 @@
 		</div>
 		<div>
 			<ul class="navbar-nav mr-auto">
+				<c:set var="userState" value="<%= userState %>"/>
 				<c:choose>
-					<c:when test="${empty sessionId}">
+					<c:when test="${userState == false}">
 						<li class="nav-item"><a class="nav-link" href="<c:url value="/member/loginMember.jsp"/>">로그인 </a></li>
 						<li class="nav-item"><a class="nav-link" href='<c:url value="/member/addMember.jsp"/>'>회원 가입</a>
 					</c:when>
 					<c:otherwise>
-						<li style="padding-top: 7px; color: white">[<%=sessionId%>님]</li>
+						<li style="padding-top: 7px; color: white">[<%=userId%>님]</li>
 						<li class="nav-item"><a class="nav-link" href="<c:url value="/member/logoutMember.jsp"/>">로그아웃 </a></li>
 						<li class="nav-item"><a class="nav-link" href='<c:url value="/member/updateMember.jsp"/>'>회원 수정</a>
 					</c:otherwise>
