@@ -20,10 +20,6 @@ public class BoardDAO {
 		if (instance == null)
 			instance = new BoardDAO();
 		return instance;
-	}	
-	
-	public String cs(String column) {  // 단어에 따옴표 추가. columnString
-		return '"' + column + '"';
 	}
 
 	public int getListCount(String items, String text) {
@@ -67,7 +63,7 @@ public class BoardDAO {
 
 	public ArrayList<BoardDTO> getBoardList(int page, int limit, String items, String text) {
 		Connection conn = null;
-		PreparedStatement pstmt = null;
+		//PreparedStatement pstmt = null;
 		Statement stmt = null;
 		ResultSet rs = null;
 
@@ -123,8 +119,8 @@ public class BoardDAO {
 			try {
 				if (rs != null) 
 					rs.close();							
-				if (pstmt != null) 
-					pstmt.close();				
+				//if (pstmt != null) 
+				//	pstmt.close();				
 				if (conn != null) 
 					conn.close();
 			} catch (Exception ex) {
