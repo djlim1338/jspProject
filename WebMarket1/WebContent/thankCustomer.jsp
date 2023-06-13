@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=utf-8"%>
 <%@ page import="java.net.URLDecoder"%>
 <%@ page import="database.ConnDB"%>
+<%@ page import="java.util.HashMap" %>
 <html>
 <head>
 <link rel="stylesheet" href="./resources/css/bootstrap.min.css" />
@@ -8,6 +9,9 @@
 </head>
 <body>
 	<%
+		String sessionId = (String) session.getAttribute("sessionId");
+	
+	
 		String shipping_cartId = "";
 		String shipping_name = "";
 		String shipping_shippingDate = "";
@@ -23,8 +27,16 @@
 				String n = thisCookie.getName();
 				if (n.equals("Shipping_cartId"))
 					shipping_cartId = URLDecoder.decode((thisCookie.getValue()), "utf-8");
+				if (n.equals("Shipping_name"))
+					shipping_name = URLDecoder.decode((thisCookie.getValue()), "utf-8");
 				if (n.equals("Shipping_shippingDate"))
 					shipping_shippingDate = URLDecoder.decode((thisCookie.getValue()), "utf-8");
+				if (n.equals("Shipping_country"))
+					shipping_country = URLDecoder.decode((thisCookie.getValue()), "utf-8");
+				if (n.equals("Shipping_zipCode"))
+					shipping_zipCode = URLDecoder.decode((thisCookie.getValue()), "utf-8");
+				if (n.equals("Shipping_addressName"))
+					shipping_addressName = URLDecoder.decode((thisCookie.getValue()), "utf-8");
 			}
 		}
 	%>
@@ -65,6 +77,7 @@
 <%
 	//session.invalidate();
 
+/*
 	if(sessionId != "" && sessionId != null){
 		ConnDB conndb = new ConnDB();
 		conndb.deleteCartAll(sessionId);
@@ -73,7 +86,9 @@
 	else{
 		session.setAttribute("cartlistNumber", null);  // cart list만 제거함
 	}
+*/
 
+/*
 	for (int i = 0; i < cookies.length; i++) {
 		Cookie thisCookie = cookies[i];
 		String n = thisCookie.getName();
@@ -92,4 +107,5 @@
 		
 		response.addCookie(thisCookie);
 	}
+*/
 %>
