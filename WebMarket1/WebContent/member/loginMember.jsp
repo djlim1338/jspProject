@@ -9,7 +9,7 @@
 	<%@ include file="../menu.jspf" %>
 	<div class="jumbotron">
 		<div class="container">
-			<h1 class="display-3">로그인</h1>
+			<h1 class="display-3">사용자 로그인</h1>
 		</div>
 	</div>
 	<div class="container" align="center">

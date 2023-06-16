@@ -48,7 +48,7 @@
 		<url-pattern>*.do</url-pattern>
 	</servlet-mapping>
 	
-	<servlet>
+	<!-- <servlet>
 		<servlet-name>ProductController</servlet-name>
 		<servlet-class>mvc.controller.ProductController</servlet-class>
 	</servlet>
@@ -56,6 +56,6 @@
 	<servlet-mapping>
 		<servlet-name>ProductController</servlet-name>
 		<url-pattern>*.do</url-pattern>
-	</servlet-mapping>
+	</servlet-mapping> -->
 	
 </web-app>

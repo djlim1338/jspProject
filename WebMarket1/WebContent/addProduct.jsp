@@ -12,9 +12,9 @@
 		</div>
 	</div>
 	<div class="container">
-		<div class="text-right"> 
+		<!-- <div class="text-right"> 
 			<a href="logout.jsp" class="btn btn-sm btn-danger pull-right">logout</a>
-		</div>
+		</div> -->
 		<form name="newProduct" id="newProductForm" action="./processAddProduct.jsp" class="form-horizontal" method="post" enctype ="multipart/form-data">
 			<div class="form-group row">
 				<label class="col-sm-2">상품 코드</label>

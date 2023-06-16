@@ -7,5 +7,6 @@
 
 <script>
 	// 뒤로가기 + 새로고침 https://issac-developer.tistory.com/16
-	location.href = document.referrer;
+	//location.href = document.referrer;
+	location.href = "./products.jsp;"
 </script>
