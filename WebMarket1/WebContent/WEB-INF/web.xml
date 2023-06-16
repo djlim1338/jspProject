@@ -24,6 +24,7 @@
 			<url-pattern>/updateProductForm.jsp</url-pattern>
 			<url-pattern>/processRemoveProduct.jsp</url-pattern>
 			<url-pattern>/products_get.jsp</url-pattern>
+			<url-pattern>/welcomeAdmin.jsp</url-pattern>
 		</web-resource-collection>
 		<auth-constraint>
 			<description>권한 관리자명</description>
@@ -39,6 +40,17 @@
 	</login-config>
 	
 	<servlet>
+		<servlet-name>Controller</servlet-name>
+		<servlet-class>mvc.controller.Controller</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>Controller</servlet-name>
+		<url-pattern>*.do</url-pattern>
+	</servlet-mapping>
+	
+	<!-- 
+	<servlet>
 		<servlet-name>BoardController</servlet-name>
 		<servlet-class>mvc.controller.BoardController</servlet-class>
 	</servlet>
@@ -47,7 +59,7 @@
 		<servlet-name>BoardController</servlet-name>
 		<url-pattern>*.do</url-pattern>
 	</servlet-mapping>
-	
+	 -->
 	<!-- <servlet>
 		<servlet-name>ProductController</servlet-name>
 		<servlet-class>mvc.controller.ProductController</servlet-class>

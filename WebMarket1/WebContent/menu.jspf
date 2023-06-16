@@ -11,22 +11,36 @@
 	<div class="container">
 		<div class="navbar-header">
 			<a class="navbar-brand" href="/WebMarket1/welcome.jsp">Home</a>
+			<%-- 
 			<c:set var="adState" value="<%= adminState %>"/>
-			<%-- <c:choose>
+			<c:choose>
 				<c:when test="${adState == false}">
 				<a class="navbar-brand" href="/WebMarket1/user.jsp">관리자 로그인</a>
 				</c:when>
 				<c:otherwise>
 					<a class="navbar-brand" href="/WebMarket1/logout.jsp">관리자 로그아웃</a>
 				</c:otherwise>
-			</c:choose> --%>
+			</c:choose> 
+			--%>
 			<%
-				if(!adminState) out.print("<a class='navbar-brand' href='/WebMarket1/user.jsp'>관리자 로그인</a>");
+				if(!adminState) out.print("<a class='navbar-brand' href='/WebMarket1/welcomeAdmin.jsp'>관리자 로그인</a>");
 				else out.print("<a class='navbar-brand' href='/WebMarket1/logout.jsp'>관리자 로그아웃</a>");
 			%>
 		</div>
 		<div>
 			<ul class="navbar-nav mr-auto">
+				<%
+					if(!userState){
+						out.print("<li class='nav-item'><a class='nav-link' href='/WebMarket1/member/loginMember.jsp'/>로그인 </a></li>");
+						out.print("<li class=nav-item><a class=nav-link href='/WebMarket1/member/addMember.jsp'>회원 가입</a>");
+					}
+					else{
+						out.print("<li style='padding-top: 7px; color: white'>"+userId+"</li>");
+						out.print("<li class='nav-item'><a class='nav-link' href='/WebMarket1/member/logoutMember.jsp'>로그아웃 </a></li>");
+						out.print("<li class='nav-item'><a class='nav-link' href='/WebMarket1/member/updateMember.jsp'>회원 수정</a>");
+					}
+				%>
+				<%-- 
 				<c:set var="userState" value="<%= userState %>"/>
 				<c:choose>
 					<c:when test="${userState == false}">
@@ -39,7 +53,7 @@
 						<li class="nav-item"><a class="nav-link" href='<c:url value="/member/updateMember.jsp"/>'>회원 수정</a>
 					</c:otherwise>
 				</c:choose>
-				
+				 --%>
 				<li class="nav-item"><a class="nav-link" href="/WebMarket1/products.jsp">상품 목록</a></li>
 				<%-- <li class="nav-item"><a class="nav-link" href="<c:url value="/ProductListAction.do"/>">상품 목록(MVC)</a></li> --%>
 				<li class="nav-item"><a class="nav-link" href="/WebMarket1/cart.jsp">장바구니</a></li>

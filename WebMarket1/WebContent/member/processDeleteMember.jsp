@@ -13,7 +13,7 @@
 	boolean deleteMemberState = conndb.deleteMember(id);
 	
 	if(deleteMemberState == true){
-		session.setAttribute("sessionId", null);
+		session.removeAttribute("sessionId");
 		response.sendRedirect("resultMember.jsp");
 	}
 	else{

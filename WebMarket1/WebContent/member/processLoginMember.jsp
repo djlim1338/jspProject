@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=utf-8"%>
+<%@ page import="java.net.URLEncoder"%>
 <%@ page import="java.util.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
@@ -16,6 +17,11 @@
 	if(rs.next()){
 		session.setAttribute("sessionId", id);
 		
+		Cookie userId = new Cookie("userId", URLEncoder.encode(id, "utf-8"));
+		Cookie passWord = new Cookie("passWord", URLEncoder.encode(password, "utf-8"));
+		response.addCookie(userId);
+		response.addCookie(passWord);
+		
 		HashMap<String, Integer> cartList = (HashMap<String, Integer>) session.getAttribute("cartlistNumber");
 		if(cartList != null){
 			for (String productId : cartList.keySet()){// 상품리스트 하나씩 출력하기
@@ -28,7 +34,7 @@
 					conndb.addCart(id, productId, cartList.get(productId));
 				}
 			}
-			session.setAttribute("cartlistNumber", null);
+			session.removeAttribute("cartlistNumber");
 		}
 	}
 	conndb.close();

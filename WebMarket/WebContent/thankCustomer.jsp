@@ -63,7 +63,7 @@
 </html>
 <%
 	//session.invalidate();
-	session.setAttribute("cartlistNumber", null);  // cart list만 제거함
+	session.removeAttribute("cartlistNumber");  // cart list만 제거함
 
 	for (int i = 0; i < cookies.length; i++) {
 		Cookie thisCookie = cookies[i];

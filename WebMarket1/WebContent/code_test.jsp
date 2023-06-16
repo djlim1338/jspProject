@@ -1,7 +1,10 @@
 <%@ page contentType="text/html; charset=utf-8"%>
 <%@ page import = "java.util.Enumeration"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>  <%-- JSTL사용을 위함 --%>
+<%@ page import = "java.util.Map"%>
+<%@ page import = "java.util.Iterator"%>
+<%@ page import = "java.util.Arrays"%>
 <%@ page import = "database.ConnDB" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>  <%-- JSTL사용을 위함 --%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,13 +27,14 @@
 			String[] roles = request.getParameterValues("role");
 		%>
 		<hr>
-		<a href="logout.jsp" class="btn btn-sm btn-danger pull-right">reset session</a>
+		<a href="resetSession.jsp" class="btn btn-sm btn-danger pull-right">reset session</a>
 		<p> SESSION ID = <%= session.getId() %>
 		<p> SESSION 생성시간 = <%= session.getCreationTime() %>
 		<p> SESSION 마지막 요청시간 = <%= session.getLastAccessedTime() %>
 		<p> SESSION 최대 허용시간 = <%= session.getMaxInactiveInterval() %>
 		<p> 사용자 이름 = <%= session.getAttribute("sessionId") %>
-		<p> 관리자 이름 = <%= request.getRemoteUser() %>
+		<p> 서블릿 보안 인증이름 = <%= request.getRemoteUser() %>
+		<p> 관리자 권한 = <%= request.isUserInRole("admin") %>
 		<p> 인증 방식 = <%= request.getAuthType() %>
 		<p> protocol = <%= request.getProtocol() %>
 		<p> real path = <%= request.getServletContext().getRealPath("./")%>
@@ -57,6 +61,16 @@
 		   
 		        out.println("<br/>얻어온 세션 이름 [ " + i +" ] : " + ls_name + "<br/>");
 		        out.println("<br/>얻어온 세션 값 [ " + i +" ] : " + ls_value + "<hr/>");
+			}
+			
+			Map<String, String[]> parameterMap = request.getParameterMap();
+			Iterator<String> itr = parameterMap.keySet().iterator();
+			String key = null;
+			String[] value = null;
+			while(itr.hasNext()){
+			   key = itr.next();
+			   value = parameterMap.get(key);  
+			   out.println("request.getParameterMap(), " + key + " : " + Arrays.toString(value));
 			}
 			
 			conndb.close();

@@ -16,7 +16,7 @@
 		conndb.close();
 	}
 	else{
-		session.setAttribute("cartlistNumber", null);  // cart list만 제거함
+		session.removeAttribute("cartlistNumber");  // cart list만 제거함
 	}
 	
 	response.sendRedirect("cart.jsp");

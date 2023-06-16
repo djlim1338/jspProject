@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>  <%-- JSTL사용을 위함 --%>
 <%@ page import="database.ConnDB"%>
 <%@ page import="java.sql.*" %>
-<jsp:useBean id="productDAO" class="dao.ProductRepository" scope="session" />
+<%-- <jsp:useBean id="productDAO" class="dao.ProductRepository" scope="session" /> 이게 뭐여--%>
 <html>
 <head>
 <link rel="stylesheet" href="./resources/css/bootstrap.min.css" />

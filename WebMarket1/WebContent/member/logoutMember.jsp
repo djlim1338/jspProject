@@ -1,6 +1,6 @@
 <%@ page contentType="text/html; charset=utf-8"%>
 
 <%
-	session.setAttribute("sessionId", null);
+	session.removeAttribute("sessionId");
 	response.sendRedirect("loginMember.jsp");
 %>
