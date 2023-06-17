@@ -25,7 +25,7 @@
 				<tr>
 					<td align="left"><a href="./deleteCart.jsp?cartId=<%=cartId%>" class="btn btn-danger">전체 삭제하기</a></td>
 					<td align="right">
-						<a href="./orderConfirmation_view.jsp?cartId=<%= cartId %>" class="btn btn-info">주문정보</a>
+						<a href="./orderConfirmation_view.jsp" class="btn btn-info">주문정보</a>
 						<input type="button" class="btn btn-success" value="주문하기" onclick="checkLogin('<%=cartId%>')">
 					</td>
 				</tr>

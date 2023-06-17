@@ -259,35 +259,69 @@ public class ConnDB {
 	}
 	
 	//-----------------------------------------------------------------------------------------------------------------------------
-	// 게시판 관련
+	// order
 	
-	public boolean insertBoard(int num, String id, String name, String subject, String content, String regist_day, int hit, String ip) {
-		String QueryStr = "INSERT INTO board(num, id, name, subject, content, regist_day, hit, ip)"
+	public boolean insertOrder(String cart_id, String user_name, String order_date, String order_country, String order_zip, String order_address, String P_id, int P_quantity) {
+		String QueryStr = "INSERT INTO orderList(cart_id, user_name, order_date, order_country, order_zip, order_address, P_id, P_quantity)"
 			+ " VALUES("
-			+ num + ","
-			+ columnString(id) + ","
-			+ columnString(name) + ","
-			+ columnString(subject) + ","
-			+ columnString(content) + ","
-			+ columnString(regist_day) + ","
-			+ hit + ","
-			+ columnString(ip) + ")";
+			+ columnString(cart_id) + ","
+			+ columnString(user_name) + ","
+			+ columnString(order_date) + ","
+			+ columnString(order_country) + ","
+			+ columnString(order_zip) + ","
+			+ columnString(order_address) + ","
+			+ columnString(P_id) + ","
+			+ P_quantity + ")";
 		return myslqExecuteUpdate(QueryStr);
 	}
 	
-	/*
-	 * String sql = "INSERT INTO board VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
-		
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, board.getNum());
-			pstmt.setString(2, board.getId());
-			pstmt.setString(3, board.getName());
-			pstmt.setString(4, board.getSubject());
-			pstmt.setString(5, board.getContent());
-			pstmt.setString(6, board.getRegist_day());
-			pstmt.setInt(7, board.getHit());
-			pstmt.setString(8, board.getIp());
-	 */
+	public boolean insertOrderCart(String cart_id, String user_id, String user_name, String order_date, String order_country, String order_zip, String order_address) {
+		String QueryStr = "INSERT INTO orderCartList(cart_id, user_id, user_name, order_date, order_country, order_zip, order_address)"
+			+ " VALUES("
+			+ columnString(cart_id) + ","
+			+ columnString(user_id) + ","
+			+ columnString(user_name) + ","
+			+ columnString(order_date) + ","
+			+ columnString(order_country) + ","
+			+ columnString(order_zip) + ","
+			+ columnString(order_address) + ")";
+		return myslqExecuteUpdate(QueryStr);
+	}
+	
+	public boolean insertOrderProduct(String cart_id, String P_id, int P_quantity) {
+		String QueryStr = "INSERT INTO orderProductList(cart_id, P_id, P_quantity)"
+			+ " VALUES("
+			+ columnString(cart_id) + ","
+			+ columnString(P_id) + ","
+			+ P_quantity + ")";
+		return myslqExecuteUpdate(QueryStr);
+	}
+	
+	public ResultSet selectOrderByUserId(String userId) {
+		String QueryStr = "SELECT * FROM orderCartList"
+				+ " WHERE user_id=" + columnString(userId);
+		return myslqExecuteQuery(QueryStr);
+	}
+
+	
+	public ResultSet selectOrderByCartId(String cartId) {
+		String QueryStr = "SELECT * FROM orderProductList"
+				+ " WHERE cart_id=" + columnString(cartId);
+		return myslqExecuteQuery(QueryStr);
+	}
+
+	
+	public boolean sameCartIdState(String cartId) {
+		String QueryStr = "SELECT * FROM orderCartList"
+				+ " WHERE cart_id=" + columnString(cartId);
+		try {
+			if(myslqExecuteQuery(QueryStr).next()) return true;
+			else return false;
+		}
+		catch(Exception e) {
+			return false;
+		}
+	}
 	
 	//-----------------------------------------------------------------------------------------------------------------------------
 	// close

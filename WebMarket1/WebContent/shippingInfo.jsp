@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=utf-8"%>
+<%@ page import="java.net.URLDecoder"%>
 <%@ page import="database.ConnDB"%>
 <%@ page import="java.sql.*" %>
 
@@ -23,6 +24,29 @@
 			}
 			conndb.close();
 		}
+		
+		String shipping_shippingDate = "";
+		String shipping_country = "";
+		String shipping_zipCode = "";	
+
+		Cookie[] cookies = request.getCookies();
+
+		if (cookies != null) {
+			for (int i = 0; i < cookies.length; i++) {
+				Cookie thisCookie = cookies[i];
+				String n = thisCookie.getName();
+				if (n.equals("Shipping_name"))
+					name = URLDecoder.decode((thisCookie.getValue()), "utf-8");
+				if (n.equals("Shipping_shippingDate"))
+					shipping_shippingDate = URLDecoder.decode((thisCookie.getValue()), "utf-8");
+				if (n.equals("Shipping_country"))
+					shipping_country = URLDecoder.decode((thisCookie.getValue()), "utf-8");
+				if (n.equals("Shipping_zipCode"))
+					shipping_zipCode = URLDecoder.decode((thisCookie.getValue()), "utf-8");
+				if (n.equals("Shipping_addressName"))
+					addressName = URLDecoder.decode((thisCookie.getValue()), "utf-8");
+			}
+		}
 	%>
 	<div class="jumbotron">
 		<div class="container">
@@ -41,19 +65,19 @@
 			<div class="form-group row">
 				<label class="col-sm-2">배송일</label>
 				<div class="col-sm-3">
-					<input name="shippingDate" type="text" class="form-control"  />(yyyy/mm/dd)
+					<input name="shippingDate" type="text" class="form-control" value="<%= shipping_shippingDate %>"/>(yyyy/mm/dd)
 				</div>
 			</div>
 			<div class="form-group row">
 				<label class="col-sm-2">국가명</label>
 				<div class="col-sm-3">
-					<input name="country" type="text" class="form-control" />
+					<input name="country" type="text" class="form-control" value="<%= shipping_country %>" />
 				</div>
 			</div>
 			<div class="form-group row">
 				<label class="col-sm-2">우편번호</label>
 				<div class="col-sm-3">
-					<input name="zipCode" type="text" class="form-control" />
+					<input name="zipCode" type="text" class="form-control" value="<%= shipping_zipCode %>" />
 				</div>
 			</div>
 			<div class="form-group row">
