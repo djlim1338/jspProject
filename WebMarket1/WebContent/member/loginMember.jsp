@@ -27,7 +27,6 @@
 				String cookieUserId = "";
 				String cookiePassWord = "";
 				
-				
 				Cookie[] cookies = request.getCookies();
 
 				if (cookies != null) {

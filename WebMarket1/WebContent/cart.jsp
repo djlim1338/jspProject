@@ -25,7 +25,8 @@
 				<tr>
 					<td align="left"><a href="./deleteCart.jsp?cartId=<%=cartId%>" class="btn btn-danger">전체 삭제하기</a></td>
 					<td align="right">
-						<a href="./orderConfirmation_view.jsp" class="btn btn-info">주문정보</a>
+						<!-- <a href="./orderConfirmation_view.jsp" class="btn btn-info">주문정보</a> -->
+						<input type="button" class="btn btn-info" value="주문정보" onclick="checkLogin2()">
 						<input type="button" class="btn btn-success" value="주문하기" onclick="checkLogin('<%=cartId%>')">
 					</td>
 				</tr>
@@ -100,6 +101,11 @@
 		function checkLogin(value){
 			var sessionId = "<%= (String) session.getAttribute("sessionId")%>";
 			if(sessionId != "null") location.href="./shippingInfo.jsp?cartId="+value;
+			else alert("로그인 해주세요.");
+		}
+		function checkLogin2(){
+			var sessionId = "<%= (String) session.getAttribute("sessionId")%>";
+			if(sessionId != "null") location.href="./orderConfirmation_view.jsp";
 			else alert("로그인 해주세요.");
 		}
 	</script>

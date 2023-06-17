@@ -10,6 +10,6 @@
 	<%@ include file="main_test.jspf"%>
 
 	<jsp:include page="footer.jspf"/>
-	<!-- <%@ include file="footer.jspf"%> -->
+	<%-- <%@ include file="footer.jspf"%> --%>
 </body>
 </html>
