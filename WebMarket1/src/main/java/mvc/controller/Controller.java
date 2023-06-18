@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import mvc.model.BoardDAO;
 import mvc.model.BoardDTO;
 import mvc.controller.BoardController;
+import mvc.controller.ProductController;
 
 public class Controller extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -29,6 +30,7 @@ public class Controller extends HttpServlet {
 		String contextPath = request.getContextPath();
 		String command = RequestURI.substring(contextPath.length());
 		BoardController bc = new BoardController();
+		ProductController pc = new ProductController();
 		
 		response.setContentType("text/html; charset=utf-8");
 		request.setCharacterEncoding("utf-8");
@@ -60,8 +62,17 @@ public class Controller extends HttpServlet {
 			bc.requestBoardDelete(request);
 			RequestDispatcher rd = request.getRequestDispatcher("/BoardListAction.do");
 			rd.forward(request, response);				
-		} 
+		}else if (command.equals("/ProductListAction.do")) { //선택된 글 삭제하기
+			pc.requestProductList(request);
+			RequestDispatcher rd = request.getRequestDispatcher("./product/list.jsp");
+			rd.forward(request, response);	
+		}else if (command.equals("/ProductDetailAction.do")) { //선택된 글 삭제하기
+			pc.requestProductDetail(request);
+			RequestDispatcher rd = request.getRequestDispatcher("./product/detail.jsp");
+			rd.forward(request, response);	
+		}
 	}
 }
+
 
 

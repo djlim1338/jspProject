@@ -48,7 +48,7 @@ public class BoardController extends HttpServlet {
 		}		
    
    		request.setAttribute("pageNum", pageNum);	  
-   		request.setAttribute("total_page", total_page);   
+   		request.setAttribute("total_page", total_page);
 		request.setAttribute("total_record",total_record); 
 		request.setAttribute("boardlist", boardlist);				
 	}
