@@ -19,7 +19,7 @@
 	<%@ include file="../menu.jspf"%>
 	<div class="jumbotron">
 		<div class="container">
-			<h1 class="display-3">상품 목록(MVC)</h1>
+			<h1 class="display-3">상품 목록(MVC2)</h1>
 		</div>
 	</div>
 

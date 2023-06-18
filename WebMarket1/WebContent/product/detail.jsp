@@ -18,7 +18,7 @@
 	<%@ include file="../menu.jspf"%>
 	<div class="jumbotron">
 		<div class="container">
-			<h1 class="display-3">상품 정보(MVC)</h1>
+			<h1 class="display-3">상품 정보(MVC2)</h1>
 		</div>
 	</div>
 	<div class="container">
@@ -39,7 +39,7 @@
 				<p><b>재고 수</b> : <%=product.getUnitsInStock()%>
 				<h4><%=product.getUnitPrice()%>원</h4>
 				
-				<p><form name="addForm" action="./addCart.jsp?id=<%=product.getId()%>" method="post">
+				<p><form name="addForm" action="./ProductAddCartAction.do?id=<%=product.getId()%>" method="post">
 					수량<input type="number" name="product_quantity" id="product_quantity" value='1' maxlength="4" style="width:80px" required>개
 					<a href="#" class="btn btn-info" onclick="addToCart()"> 상품 담기 &raquo;</a> 
 					<a href="./cart.jsp" class="btn btn-warning"> 장바구니 &raquo;</a>

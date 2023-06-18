@@ -40,4 +40,19 @@ public class ProductController extends HttpServlet {
 		request.setAttribute("product", product);
 		request.setAttribute("id", productId);
 	}
+	
+	public void requestProductAddCart(HttpServletRequest request) {
+		
+		ProductDAO dao = ProductDAO.getInstance();
+		
+		String userId = (String) request.getSession().getAttribute("sessionId");
+		String productId = (String) request.getParameter("id");
+		int productQuantity = Integer.parseInt(request.getParameter("product_quantity"));
+		
+		int insertState = 0;
+
+		if(userId != null) insertState = dao.addCart(userId, productId, productQuantity);
+		
+		request.setAttribute("insertState", insertState);
+	}
 }

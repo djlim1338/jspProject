@@ -70,6 +70,10 @@ public class Controller extends HttpServlet {
 			pc.requestProductDetail(request);
 			RequestDispatcher rd = request.getRequestDispatcher("./product/detail.jsp");
 			rd.forward(request, response);	
+		}else if (command.equals("/ProductAddCartAction.do")) { //선택된 글 삭제하기
+			pc.requestProductAddCart(request);
+			RequestDispatcher rd = request.getRequestDispatcher("./product/addCart.jsp");
+			rd.forward(request, response);	
 		}
 	}
 }

@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import mvc.database.DBConnection;
 
 public class ProductDAO {
+	protected Connection conn = null;
+	protected Statement stmt = null;
+	protected ResultSet rs = null;
 
 	private static ProductDAO instance;
 	
@@ -24,11 +27,19 @@ public class ProductDAO {
 	public String ts(String str) {  // to String
 		return "'"+str+"'";
 	}
+	
+	public void closeDB() {
+		try {
+			if (rs != null) 
+				rs.close();		
+			if (conn != null) 
+				conn.close();
+		} catch (Exception ex) {
+			throw new RuntimeException(ex.getMessage());
+		}
+	}
 
 	public ArrayList<ProductDTO> getProductListAll() {
-		Connection conn = null;
-		Statement stmt = null;
-		ResultSet rs = null;
 
 		String sql = "SELECT * FROM product";
 
@@ -56,23 +67,12 @@ public class ProductDAO {
 		} catch (Exception ex) {
 			System.out.println("getBoardList() 에러 : " + ex);
 		} finally {
-			try {
-				if (rs != null) 
-					rs.close();		
-				if (conn != null) 
-					conn.close();
-			} catch (Exception ex) {
-				throw new RuntimeException(ex.getMessage());
-			}			
+			closeDB();
 		}
 		return list;
 	}
 	
-	public ProductDTO getProductById(String id) {
-		Connection conn = null;
-		Statement stmt = null;
-		ResultSet rs = null;
-
+	public ProductDTO getProductById(String id) {  // 상품 ID로 상품 찾아옴
 		String sql = "SELECT * FROM product WHERE P_id='" + id + "'";
 		
 		ProductDTO product = null;
@@ -97,16 +97,67 @@ public class ProductDAO {
 		} catch (Exception ex) {
 			System.out.println("getBoardList() 에러 : " + ex);
 		} finally {
-			try {
-				if (rs != null) 
-					rs.close();		
-				if (conn != null) 
-					conn.close();
-			} catch (Exception ex) {
-				throw new RuntimeException(ex.getMessage());
-			}			
+			closeDB();
 		}
 		
 		return product;
+	}
+	
+	public int getCartProductQuantity(String userId, String productId) {  // 사용자ID, 상품ID로 카트 내 수량 반환
+		String sql = "SELECT quantity FROM cart WHERE userId='"+userId+"' AND P_id='" + productId + "'";
+		
+		int productQuantity = 0;
+		
+		try {
+			conn = DBConnection.getConnection();
+			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE);
+			rs = stmt.executeQuery(sql);
+			
+			if(rs.next()) {
+				productQuantity = rs.getInt("quantity");
+			}
+		} catch (Exception ex) {
+			System.out.println("getBoardList() 에러 : " + ex);
+		} finally {
+			closeDB();
+		}
+		
+		return productQuantity;
+	}
+	
+	public int addCart(String userId, String productId, int quantity) {
+		String sql = "";
+		
+		int productCartQuantity = getCartProductQuantity(userId, productId);
+		int insertState = 0;
+		
+		if(productCartQuantity > 0) {
+			productCartQuantity += quantity;
+			sql = "UPDATE cart"
+					+ " SET"
+					+ " quantity = '"+productCartQuantity+"'"
+					+ " WHERE userId='"+userId+"'"
+					+ " AND P_id='"+productId+"'";
+		}
+		else {
+			sql = "INSERT INTO cart(userId, P_id, quantity)"
+					+ " VALUES("
+					+ "'"+userId+"'"
+					+ ",'"+productId+"'"
+					+ ","+quantity+")";
+		}
+		
+		try {
+			conn = DBConnection.getConnection();
+			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE);
+			insertState = stmt.executeUpdate(sql);  // 0:fail, 1:success (추정)
+
+		} catch (Exception ex) {
+			System.out.println("getBoardList() 에러 : " + ex);
+		} finally {
+			closeDB();
+		}
+		
+		return insertState;
 	}
 }

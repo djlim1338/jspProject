@@ -55,10 +55,10 @@
 				</c:choose>
 				 --%>
 				<li class="nav-item"><a class="nav-link" href="/WebMarket1/products.jsp">상품 목록</a></li>
-				<li class="nav-item"><a class="nav-link" href="<c:url value="/ProductListAction.do"/>">상품 목록(MVC)</a></li>
+				<li class="nav-item"><a class="nav-link" href="/WebMarket1/ProductListAction.do">상품 목록(MVC2)</a></li>
 				<li class="nav-item"><a class="nav-link" href="/WebMarket1/cart.jsp">장바구니</a></li>
 				<li class="nav-item"><a class="nav-link" href="<c:url value="/BoardListAction.do?pageNum=1"/>">게시판</a></li>
-				<li class="nav-item"><a class="nav-link" href="/WebMarket1/code_test.jsp">코드 테스트</a></li>
+				<li class="nav-item"><a class="nav-link" href="/WebMarket1/code_test.jsp">CT</a></li>
 				
 				<%
 					if(adminState){
