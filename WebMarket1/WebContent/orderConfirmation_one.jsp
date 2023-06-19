@@ -10,7 +10,7 @@
 	request.setCharacterEncoding("UTF-8");
 	String sessionId = (String) session.getAttribute("sessionId");
 	String cartId = (String) request.getParameter("cartId");
-	out.print(cartId);
+	//out.print(cartId);
 %>
 <html>
 <head>
@@ -73,7 +73,7 @@
 						sum = sum + total;
 			%>
 			<tr>
-				<td class="text-center"><em><%=rsProduct.getString("p_name")%> </em></td>
+				<td class="text-center"><em><a href="/WebMarket1/product.jsp?id=<%=rsProduct.getString("P_id")%>"><%=rsProduct.getString("p_name")%></a></em></td>
 				<td class="text-center"><%=rs.getString("P_quantity")%></td>
 				<td class="text-center"><%=rsProduct.getString("p_unitPrice")%>원</td>
 				<td class="text-center"><%=total%>원</td>

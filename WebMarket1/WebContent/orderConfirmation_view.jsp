@@ -46,7 +46,7 @@
 				while(rs.next()){
 			%>
 				<tr>
-					<td class="text-center"><a href="orderConfirmation_one.jsp?cartId=<%=rs.getString("cart_id")%>"><%=rs.getString("cart_id")%> </a></td>
+					<td class="text-center"><em><a href="orderConfirmation_one.jsp?cartId=<%=rs.getString("cart_id")%>"><%=rs.getString("cart_id")%> </a></em></td>
 					<td class="text-center"><%=rs.getString("user_name")%></td>
 					<td class="text-center"><%=rs.getString("order_date")%></td>
 					<td class="text-center"><%=rs.getString("order_country")%></td>

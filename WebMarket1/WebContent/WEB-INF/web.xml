@@ -24,6 +24,8 @@
 			<url-pattern>/updateProductForm.jsp</url-pattern>
 			<url-pattern>/processRemoveProduct.jsp</url-pattern>
 			<url-pattern>/products_get.jsp</url-pattern>
+			<url-pattern>/products_remove.jsp</url-pattern>
+			<url-pattern>/products_update.jsp</url-pattern>
 			<url-pattern>/welcomeAdmin.jsp</url-pattern>
 		</web-resource-collection>
 		<auth-constraint>

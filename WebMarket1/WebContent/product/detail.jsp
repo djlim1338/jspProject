@@ -79,8 +79,6 @@
 				//document.addForm.reset();  // reset시 입력값이 초기화됨. 그냥 두기위해 return
 			}
 		}
-
 	</script>
-	
 </body>
 </html>

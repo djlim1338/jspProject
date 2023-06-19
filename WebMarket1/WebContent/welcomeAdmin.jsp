@@ -13,3 +13,6 @@
 	<!-- <%@ include file="footer.jspf"%> -->
 </body>
 </html>
+<%
+	response.sendRedirect("products.jsp");
+%>
