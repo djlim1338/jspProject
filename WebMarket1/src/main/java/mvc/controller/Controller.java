@@ -13,8 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import mvc.model.BoardDAO;
 import mvc.model.BoardDTO;
-import mvc.controller.BoardController;
-import mvc.controller.ProductController;
+import mvc.controller.BoardController_new;
+import mvc.controller.ProductController_new;
 
 public class Controller extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -29,8 +29,8 @@ public class Controller extends HttpServlet {
 		String RequestURI = request.getRequestURI();
 		String contextPath = request.getContextPath();
 		String command = RequestURI.substring(contextPath.length());
-		BoardController bc = new BoardController();
-		ProductController pc = new ProductController();
+		BoardController_new bc = new BoardController_new();
+		ProductController_new pc = new ProductController_new();
 		
 		response.setContentType("text/html; charset=utf-8");
 		request.setCharacterEncoding("utf-8");
