@@ -45,6 +45,14 @@
 					<a href="./cart.jsp" class="btn btn-warning"> 장바구니 &raquo;</a>
 					<a href="/WebMarket1/ProductListAction.pdo" class="btn btn-secondary"> 상품 목록 &raquo;</a>
 				</form>
+				<%-- 
+				<p><form name="addForm" action="./ProductAddCartAction.do?id=<%=product.getId()%>" method="post">
+					수량<input type="number" name="product_quantity" id="product_quantity" value='1' maxlength="4" style="width:80px" required>개
+					<a href="#" class="btn btn-info" onclick="addToCart()"> 상품 담기 &raquo;</a> 
+					<a href="./cart.jsp" class="btn btn-warning"> 장바구니 &raquo;</a>
+					<a href="/WebMarket1/ProductListAction.do" class="btn btn-secondary"> 상품 목록 &raquo;</a>
+				</form>
+				 --%>
 			</div>
 		</div>
 		<hr>
@@ -54,6 +62,7 @@
 			out.print("받은 P_id: "+productId);
 			%>
 			<H1>선택한 상품이 없음.</H1>
+			<!-- <a href="/WebMarket1/ProductListAction.do" class="btn btn-secondary"> 상품 목록 &raquo;</a> -->
 			<a href="/WebMarket1/ProductListAction.pdo" class="btn btn-secondary"> 상품 목록 &raquo;</a>
 			<%
 		}

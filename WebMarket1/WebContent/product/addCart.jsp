@@ -26,5 +26,6 @@
 		else cartList.put(id, cartNumber + productQuantity);  // 있으면 +productQuantity
 	}
 	
+	//if(insertState>0) response.sendRedirect("ProductDetailAction.do?id=" + id); // + "&addCart=1");
 	if(insertState>0) response.sendRedirect("ProductDetailAction.pdo?id=" + id); // + "&addCart=1");
 %>

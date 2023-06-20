@@ -31,14 +31,17 @@ public class ProductController extends HttpServlet {
 		response.setContentType("text/html; charset=utf-8");
 		request.setCharacterEncoding("utf-8");
 	
+		//if (command.equals("/ProductListAction.do")) { //선택된 글 삭제하기
 		if (command.equals("/ProductListAction.pdo")) { //선택된 글 삭제하기
 			requestProductList(request);
 			RequestDispatcher rd = request.getRequestDispatcher("./product/list.jsp");
 			rd.forward(request, response);	
+		//}else if (command.equals("/ProductDetailAction.do")) { //선택된 글 삭제하기
 		}else if (command.equals("/ProductDetailAction.pdo")) { //선택된 글 삭제하기
 			requestProductDetail(request);
 			RequestDispatcher rd = request.getRequestDispatcher("./product/detail.jsp");
 			rd.forward(request, response);	
+		//}else if (command.equals("/ProductAddCartAction.do")) { //선택된 글 삭제하기
 		}else if (command.equals("/ProductAddCartAction.pdo")) { //선택된 글 삭제하기
 			requestProductAddCart(request);
 			RequestDispatcher rd = request.getRequestDispatcher("./product/addCart.jsp");
