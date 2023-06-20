@@ -30,6 +30,7 @@
 			<div class="col-md-4">
 				<img src ="./resources/images/<%= rs.getString("p_fileName")%>" style ="width: 100%">
 				<h3><%= rs.getString("p_name")%></h3>
+				<p>[<%= rs.getString("p_id")%>]
 				<p><%= rs.getString("p_description")%>
 				<p><%= rs.getString("p_unitPrice")%>원
 				<p><a href="./processRemoveProduct.jsp?id=<%= rs.getString("p_id")%>" class="btn btn-secondary" role="button"> 상품 삭제 &raquo;</a>
